@@ -107,16 +107,14 @@ $(function(){
 })
 </script>
 	<div class="col-md-10">
-		<fieldset style="border: 1px solid #c0c0c0; padding: 5px;">
-			<legend style="padding: 5px;border:none;">Tambah Barang</legend>
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
 
-				<div class="box">
-					<span class="form-control">Nama Barang</span>
-					<p>
-						<input type="text" name="nama" class="form-control input-md">
-					</p>
+			<div class="form-group">
+				<label>Email address</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
 				</div>
-
+				
 		</fieldset>
 	</div>
 
