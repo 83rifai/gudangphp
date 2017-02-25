@@ -1,0 +1,14 @@
+body { 
+  background: url(http://localhost/gudang/img/2.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+}
+
+.panel-default {
+    opacity: 0.9;
+	margin-top: 130px;
+}
+.form-group.last { margin-bottom:0px; }
