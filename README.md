@@ -1,1 +1,2 @@
-# gudangphp
+# Aplikasi Gudang dengan PHP Native
+
