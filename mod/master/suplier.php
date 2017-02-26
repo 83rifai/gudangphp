@@ -51,7 +51,7 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 
 function doBrowse(){
 		$no=0;
-		$query=mysql_query("select * from suplier")or die("gagal".mysql_error());
+		$query=mysql_query("select * from master_suplier")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -73,16 +73,16 @@ function doBrowse(){
                <tbody>
                
                <?php
-			   while($r=mysql_fetch_array($query)){
+			   while($result = mysql_fetch_assoc($query)){
 			   $no++;
 			   ?>
                     <tr>
-                       <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_suplier]";?></td>
-                       <td width="25%"><?php echo"$r[almt_suplier]";?></td>
-					   <td width="20%"><?php echo"$r[no_telp]";?> / <br><?php echo"$r[email]";?></td>
-                       <td width="15%"><a href="?mod=suplier&act=editsuplier&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=suplier&act=hapus_suplier&id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+                       <td width="5%"><?php echo $no;?></td>
+					   <td width="35%"><?php echo $result['nama'];?></td>
+                       <td width="25%"><?php echo $result['alamat'];?></td>
+					   <td width="20%"><?php echo $result['no_telp'];?> / <br><?php echo $result['email'];?></td>
+                       <td width="15%"><a href="?mod=suplier&act=editsuplier&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
+                       <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_supplier.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     </tr>
                <?php
@@ -92,6 +92,17 @@ function doBrowse(){
         </table>
     </div>
     
+	
+	<script type="text/javascript">
+	function DelData(Url){
+		$.post(Url,function(data){
+			alert(data);
+			window.location.reload();
+		});
+		return false;
+		
+	}
+	</script>
 <?php
     }
     // this function add new data
@@ -106,9 +117,9 @@ function doBrowse(){
 <form id="form-suplier" method="post" action="<?=$_GET['id']?>">
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
-			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Suplier</legend>
 			<div class="col-md-6">
-			<input type="hidden" value="<?=$results['id']?$results['id']:""?>" name="id" >
+			<input type="hidden" value="<?=$results['id']?$results['id']:"0"?>" name="id" >
 				<div class="form-group">
 					<label>Nama Suplier</label>
 					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
@@ -143,8 +154,8 @@ function doBrowse(){
 $(document).ready(function(){
 	$('#form-suplier').submit(function(){
 		var act = "add";
-		if(('#form-suplier').attr('action')){act = "edit"}
-		$.post('controllers/master_suplier.php?act=add',$('#form-suplier').serialize(),function(data){
+		if($('input[name=id]') == "0"){act = "edit";}
+		$.post('controllers/master_supplier.php?act='+act,$('#form-suplier').serialize(),function(data){
 			alert(data);
 			window.location.href = "media.php?mod=suplier";
 		});
