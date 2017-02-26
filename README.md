@@ -6,3 +6,5 @@
 * /database/db_gudang.sql
 **
 */
+
+Bagus Candra
