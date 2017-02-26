@@ -29,7 +29,7 @@ if($act == "add"){
 	}
 }else if($act == "edit"){
 	if($_POST){
-		$query = mysql_query("UPDATE master_produk (nama,jenis_id,konversi_satuan_id,warna) 
+		$query = mysql_query("UPDATE master_produk 
 			SET nama = ('".$_POST['nama']."', jenis_id = '".$_POST['jenis_id']."', konversi_satuan_id = '".$_POST['konversi_satuan_id']."',warna = '".$_POST['warna']."')
 			WHERE id = ".$_POST['id']."
 			");
