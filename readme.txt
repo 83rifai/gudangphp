@@ -1,2 +1,3 @@
-readme
-candra
+Copyright
+
+Bagus Candra W.
