@@ -7,4 +7,3 @@
 **
 */
 
-Bagus Candra
