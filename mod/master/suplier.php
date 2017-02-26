@@ -78,8 +78,8 @@ function doBrowse(){
 			   ?>
                     <tr>
                        <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_suplier]";?></td>
-                       <td width="25%"><?php echo"$r[almt_suplier]";?></td>
+					   <td width="35%"><?php echo"$r[nama]";?></td>
+                       <td width="25%"><?php echo"$r[alamat]";?></td>
 					   <td width="20%"><?php echo"$r[no_telp]";?> / <br><?php echo"$r[email]";?></td>
                        <td width="15%"><a href="?mod=suplier&act=editsuplier&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
                        <a href="aksi.php?mod=suplier&act=hapus_suplier&id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
@@ -122,8 +122,8 @@ function doBrowse(){
 			
 			<div class="col-md-6">
 				<div class="form-group">
-					<label>Alamat</label>
-					<input type="text" class="form-control" value="<?=$results['alamat']?$results['alamat']:""?>" name="no_telp" placeholder="Nomor Telephone">
+					<label>No Telp</label>
+					<input type="text" class="form-control" value="<?=$results['no_telp']?$results['no_telp']:""?>" name="no_telp" placeholder="Nomor Telephone">
 				</div>
 				<div class="form-group">
 					<label>Email</label>
