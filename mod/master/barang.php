@@ -79,8 +79,9 @@ function doBrowse(){
                        <td width="20%"><?php echo $result['warna'];?></td>
 					   <td width="20%"><?php echo $result['merk'];?></td>
 					   <td width="20%"><?php echo $result['satuan_terkecil'];?></td>
-                       <td width="15%"><a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=barang&act=hapus_barang&id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+                       <td width="15%" align="center">
+					   <a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a>&nbsp;
+                       <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_barang.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     </tr>
                <?php
@@ -89,12 +90,27 @@ function doBrowse(){
              </tbody>
         </table>
     </div>
+	<script type="text/javascript">
+	function DelData(Url){
+		$.post(Url,function(data){
+			alert(data);
+			window.location.reload();
+		});
+		return false;
+		
+	}
+	</script>
     
 <?php
     }
-    /////// function tambah ////////
+    // this function PHP add new data
     function doAdd(){
-    $aksi = $_GET[act];  
+    $aksi = $_GET['act'];
+	$results = "";
+	if($_GET['id']){	
+		$queries = mysql_query("select * from master_produk where id = ".$_GET['id']." ");
+		$results = mysql_fetch_assoc($queries);
+	}
 ?>
 <script type="text/javascript">	
 $(function(){	
@@ -117,19 +133,20 @@ $(function(){
 
 })
 </script>
-<form id="form-barang" method="post" action="">
+<form id="form-barang" method="post" action="<?=$_GET['id']?>">
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
 			<div class="col-md-6">
+			<input type="hidden" value="<?=$results['id']?$results['id']:""?>" name="id" >
 				<div class="form-group">
 					<label>Nama Barang</label>
-					<input type="text" class="form-control" name="nama" placeholder="nama">
+					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
 				</div>
 				
 				<div class="form-group">
 					<label>Warna Barang</label>
-					<input type="text" class="form-control" name="warna" placeholder="warna">
+					<input type="text" class="form-control" value="<?=$results['warna']?$results['warna']:""?>" name="warna" placeholder="warna">
 				</div>
 			</div>
 			
@@ -141,7 +158,9 @@ $(function(){
 						<?php
 						$query = mysql_query("select * from master_jenis");
 						while($result = mysql_fetch_assoc($query) ){
-							echo "<option value='".$result['id']."'>".$result['nama']."</option>";
+							$selected = "";
+							if($results['jenis_id']==$result['id']){$selected = "selected";}
+							echo "<option ".$selected." value='".$result['id']."'>".$result['nama']."</option>";
 						}
 						?>
 					</select>
@@ -154,7 +173,9 @@ $(function(){
 						
 						$query = mysql_query("select id, getSatuan(satuan_terkecil) as satuan_terkecil from konversi_satuan where parent = 0");
 						while($result = mysql_fetch_assoc($query) ){
-							echo "<option value='".$result['id']."'>".$result['satuan_terkecil']."</option>";
+							$s_selected = "";
+							if($results['konversi_satuan_id'] == $result['id'] ){$s_selected = "selected";}
+							echo "<option ".$s_selected." value='".$result['id']."'>".$result['satuan_terkecil']."</option>";
 						}
 						?>
 					</select>
@@ -172,6 +193,8 @@ $(function(){
 <script>
 $(document).ready(function(){
 	$('#form-barang').submit(function(){
+		var act = "add";
+		if(('#form-barang').attr('action')){act = "edit"}
 		$.post('controllers/master_barang.php?act=add',$('#form-barang').serialize(),function(data){
 			alert(data);
 			window.location.href = "media.php?mod=barang";
@@ -187,7 +210,7 @@ $(document).ready(function(){
 ?>
 
 <?php
-/////// akhir function edit //////// 
+ // end function
 switch($_GET['act']){
     default:
         doBrowse();
