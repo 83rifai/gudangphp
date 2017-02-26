@@ -120,24 +120,24 @@ function doBrowse(){
 			<?php if( $aksi == "addsuplier" ) {?>
 				<div class="form-group">
 				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Suplier" name="nm_suplier" id="nm_suplier" type="text" >
+				   <input class="form-control" placeholder="Nama Suplier" name="nama" id="nm_suplier" type="text" >
 				</div>
 			<?php } else {?>
 				<div class="form-group">
 				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Suplier" name="nm_suplier" id="nm_suplier" type="text" value="<?php echo"$d[nm_suplier]"?>"  >
+				   <input class="form-control" placeholder="Nama Suplier" name="nama" id="nm_suplier" type="text" value="<?php echo"$d[nm_suplier]"?>"  >
 				</div>
 			<?php }?>
 			
 			<?php if( $aksi == "addsuplier" ) {?>
 				<div class="form-group">
 				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Suplier" name="almt_suplier" id="almt_suplier" type="text"></textarea>
+				   <textarea class="form-control" placeholder="Alamat Suplier" name="alamat" id="alamat" type="text"></textarea>
 				</div>
 			<?php } else {?>
 				<div class="form-group">
 				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Suplier" name="almt_suplier" id="almt_suplier" type="text"><?php echo"$d[almt_suplier]"?></textarea>
+				   <textarea class="form-control" placeholder="Alamat Suplier" name="alamat" id="alamat" type="text"><?php echo"$d[almt_suplier]"?></textarea>
 				</div>
 			<?php }?>
 			

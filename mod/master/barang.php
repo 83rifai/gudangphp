@@ -30,14 +30,7 @@ $(function(){
 <?php
 function doBrowse(){
 		$no=0;
-		$query=mysql_query("SELECT e.*,a.id_satuan,
-							CONCAT('Besar : ' , b.nama , CONCAT(' ( ' , b.jumlah , ' ) ')) AS besar,
-							CONCAT('Sedang : ' , c.nama , CONCAT(' ( ' , c.jumlah , ' ) ')) AS sedang,
-							CONCAT('Kecil : ' , d.nama , CONCAT(' ( ' , d.jumlah , ' ) ')) AS kecil FROM satuan a 
-							INNER JOIN barang e ON a.id_satuan=e.id_satuan
-							INNER JOIN besar b ON a.st_besar=b.id 
-							INNER JOIN sedang c ON a.st_sedang=c.id 
-							INNER JOIN kecil d ON a.st_kecil=d.id")or die("gagal".mysql_error());
+		$query=mysql_query("SELECT * FROM master_produk")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -59,17 +52,17 @@ function doBrowse(){
                
                <?php
 			  
-			   while($r=mysql_fetch_array($query)){
+			   while($result =mysql_fetch_array($query)){
 			   $no++;
 			   ?>
                     <tr>
                        <td width="5%"><?php echo"$no";?></td>
-					   <td width="20%"><?php echo"$r[nm_jenis]";?></td>
-                       <td width="20%"><?php echo"$r[nm_warna]";?></td>
-					   <td width="20%"><?php echo"$r[nm_merk]";?></td>
-					   <td width="20%"><?php echo"$r[besar]";?> <br><?php echo"$r[sedang]";?><br><?php echo"$r[kecil]";?></td>
-                       <td width="15%"><a href="?mod=barang&act=editbarang&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=barang&act=hapus_barang&id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+					   <td width="20%"><?php echo $result['nama'];?></td>
+                       <td width="20%"><?php echo $result['warna'];?></td>
+					   <td width="20%"><?php echo $result['nama'];?></td>
+					   <td width="20%"><?php echo $result[''];?></td>
+                       <td width="15%"><a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
+                       <a href="aksi.php?mod=barang&act=hapus_barang&id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     </tr>
                <?php
@@ -106,7 +99,7 @@ $(function(){
 
 })
 </script>
-<form>
+<form id="form-barang" method="post" action="">
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
@@ -125,7 +118,7 @@ $(function(){
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Jenis Barang</label>
-					<select name="id_jenis" class="form-control">
+					<select name="jenis_id" class="form-control">
 						<option value="">-Pilih Jenis Barang-</option>
 						<?php
 						$query = mysql_query("select * from master_jenis");
@@ -137,22 +130,38 @@ $(function(){
 				</div>
 				<div class="form-group">
 					<label>Satuan Barang</label>
-					<select name="id_jenis" class="form-control">
-						<option value="">-Pilih Jenis Barang-</option>
+					<select name="konversi_satuan_id" class="form-control">
+						<option value="">-Pilih Satuan Barang-</option>
 						<?php
 						
-						$query = mysql_query("select * from konversi_satuan");
+						$query = mysql_query("select id, getSatuan(satuan_terkecil) as satuan_terkecil from konversi_satuan where parent = 0");
 						while($result = mysql_fetch_assoc($query) ){
-							echo "<option value='".$result['id']."'>".$result['nama']."</option>";
+							echo "<option value='".$result['id']."'>".$result['satuan_terkecil']."</option>";
 						}
 						?>
 					</select>
 				</div>
 			</div>
 			
+			<div class="col-md-10">
+				<input type="submit" name="Simpan" value="Simpan" class="btn btn-primary btn-md">
+			</div>
 		</fieldset>
 	</div>
+	
 </form>
+
+<script>
+$(document).ready(function(){
+	$('#form-barang').submit(function(){
+		$.post('controllers/master_barang.php?act=add',$('#form-barang').serialize(),function(data){
+			alert(data);
+			window.location.href = "media.php?mod=barang";
+		});
+		return false;
+	}); // end function submit
+}); // end function document
+</script>
 
 <?php
 }
