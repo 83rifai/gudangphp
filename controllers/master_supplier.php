@@ -6,8 +6,8 @@ $act = $_GET['act'];
 
 if($act == "add"){
 	if($_POST){
-		$query = mysql_query("INSERT INTO master_suplier (nama,alamat,no_telp,email) 
-		VALUES ('".$_POST['nama']."','".$_POST['alamat']."','".$_POST['no_telp']."','".$_POST['email']."')
+		$query = mysql_query("INSERT INTO master_suplier (nama) 
+		VALUES ('".$_POST['nama']."')
 		");
 
 		if($query){
