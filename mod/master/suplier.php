@@ -96,89 +96,70 @@ function doBrowse(){
     }
     // this function add new data
     function doAdd(){
-    $aksi = $_GET[act];  
+    $aksi = $_GET['act'];
+		if($_GET['id']){
+			$queries = mysql_query("SELECT * FROM master_suplier WHERE id = ".$_GET['id']." ");
+			$results = mysql_fetch_assoc($queries);
+		}
 ?>
-<div class="tabelku col-md-5">
-	<div class="box-body">
-    <div class="content-header"><h3><b><label>Data Suplier</label></b><h3></a></div>
-		<form action="aksi.php?mod=suplier&act=insert" method="post" id="suplier1" enctype="multipart/form-data">
-		 
-		 <?php
-				$no_max=mysql_query("SELECT ifnull(max(id),0)+1 AS reg  FROM suplier");
-	            $n=mysql_fetch_array($no_max);
+
+<form id="form-suplier" method="post" action="<?=$_GET['id']?>">
+	<div class="col-md-10">
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
+			<div class="col-md-6">
+			<input type="hidden" value="<?=$results['id']?$results['id']:""?>" name="id" >
+				<div class="form-group">
+					<label>Nama Suplier</label>
+					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
+				</div>
 				
-				if($aksi == "editsuplier"){
-           	        $edit=mysql_query("SELECT * FROM suplier where id='$_GET[id]'");
-	                $d=mysql_fetch_array($edit);   
-           	       }
-            ?> 
-				
-        <input type="hidden" name="id" id="id" value="<?php echo"$n[reg]";?>" />
-		<input type="hidden" name="id2" id="id2" value="<?php echo"$_GET[id]";?>" />
-        <input type="hidden" name="aksi" id="aksi" value="<?php echo"$aksi";?>" />
-        	
-			<?php if( $aksi == "addsuplier" ) {?>
 				<div class="form-group">
-				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Suplier" name="nama" id="nm_suplier" type="text" >
+					<label>Alamat</label>
+					<input type="text" class="form-control" value="<?=$results['alamat']?$results['alamat']:""?>" name="alamat" placeholder="Alamat Suplier">
 				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Suplier" name="nama" id="nm_suplier" type="text" value="<?php echo"$d[nm_suplier]"?>"  >
-				</div>
-			<?php }?>
+			</div>
 			
-			<?php if( $aksi == "addsuplier" ) {?>
+			<div class="col-md-6">
 				<div class="form-group">
-				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Suplier" name="alamat" id="alamat" type="text"></textarea>
+					<label>Alamat</label>
+					<input type="text" class="form-control" value="<?=$results['alamat']?$results['alamat']:""?>" name="no_telp" placeholder="Nomor Telephone">
 				</div>
-			<?php } else {?>
 				<div class="form-group">
-				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Suplier" name="alamat" id="alamat" type="text"><?php echo"$d[almt_suplier]"?></textarea>
+					<label>Email</label>
+					<input type="text" class="form-control" value="<?=$results['email']?$results['email']:""?>" name="email" placeholder="Alamat Email">
 				</div>
-			<?php }?>
+			</div>
 			
-			<?php if( $aksi == "addsuplier" ) {?>
-				<div class="form-group">
-				   <label>No Telp </label>
-				   <input class="form-control" placeholder="No telp Suplier" name="no_telp" id="no_telp" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>No Telp</label>
-				   <input class="form-control" placeholder="No telp Suplier" name="no_telp" id="no_telp" type="text" value="<?php echo"$d[no_telp]"?>"  >
-				</div>
-			<?php }?>
-			
-			<?php if( $aksi == "addsuplier" ) {?>
-				<div class="form-group">
-				   <label>Email </label>
-				   <input class="form-control" placeholder="Email Suplier" name="email" id="email" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Email</label>
-				   <input class="form-control" placeholder="Email Suplier" name="email" id="email" type="text" value="<?php echo"$d[email]"?>"  >
-				</div>
-			<?php }?>
-			
-            <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="simpan">
-               <input type="button" class="btn btn-danger" onClick='self.history.back()'  value="batal">
-			</div>                             
-		</form>
+			<div class="col-md-10">
+				<input type="submit" name="Simpan" value="Simpan" class="btn btn-primary btn-md">
+			</div>
+		</fieldset>
 	</div>
-</div>
+	
+</form>
+
+<script>
+$(document).ready(function(){
+	$('#form-suplier').submit(function(){
+		var act = "add";
+		if(('#form-suplier').attr('action')){act = "edit"}
+		$.post('controllers/master_suplier.php?act=add',$('#form-suplier').serialize(),function(data){
+			alert(data);
+			window.location.href = "media.php?mod=suplier";
+		});
+		return false;
+	}); // end function submit
+}); // end function document
+</script>
+
 <?php
 }
-/////// akhir function tambah ////////
+ // function end
 ?>
 
 <?php
-/////// akhir function edit //////// 
+ // function end
 switch($_GET['act']){
     default:
         doBrowse();

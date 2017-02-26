@@ -133,6 +133,7 @@ $(function(){
 
 })
 </script>
+
 <form id="form-barang" method="post" action="<?=$_GET['id']?>">
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
@@ -194,8 +195,8 @@ $(function(){
 $(document).ready(function(){
 	$('#form-barang').submit(function(){
 		var act = "add";
-		if(('#form-barang').attr('action')){act = "edit"}
-		$.post('controllers/master_barang.php?act=add',$('#form-barang').serialize(),function(data){
+		if($('input[name=id]')){act = "edit";}
+		$.post('controllers/master_barang.php?act='+act,$('#form-barang').serialize(),function(data){
 			alert(data);
 			window.location.href = "media.php?mod=barang";
 		});
