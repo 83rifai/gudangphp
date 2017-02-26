@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50534
 File Encoding         : 65001
 
-Date: 2017-02-25 17:59:03
+Date: 2017-02-26 15:17:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
 -- Records of barang
 -- ----------------------------
 BEGIN;
-INSERT INTO `barang` VALUES ('HA1.M1.M1.S1.S1.K1', 'S1.S1.K1', '0', 'HVS_A4', '0', 'Merah', '0', 'Merah', '0'), ('HA1.P1.N1.S3.S2.K2', 'S3.S2.K2', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '8'), ('HA1.P1.N1.S3.S2.K3', 'S3.S2.K3', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '2');
+INSERT INTO `barang` VALUES ('1', null, null, null, null, null, null, null, null), ('HA1.M1.M1.S1.S1.K1', 'S1.S1.K1', '0', 'HVS_A4', '0', 'Merah', '0', 'Merah', '0'), ('HA1.P1.N1.S3.S2.K2', 'S3.S2.K2', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '8'), ('HA1.P1.N1.S3.S2.K3', 'S3.S2.K3', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '2');
 COMMIT;
 
 -- ----------------------------
@@ -133,6 +133,50 @@ INSERT INTO `konversi_satuan` VALUES ('1', '0', '0', '1', '1'), ('2', '1', '1', 
 COMMIT;
 
 -- ----------------------------
+-- Table structure for master_jenis
+-- ----------------------------
+DROP TABLE IF EXISTS `master_jenis`;
+CREATE TABLE `master_jenis` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`nama`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=4
+
+;
+
+-- ----------------------------
+-- Records of master_jenis
+-- ----------------------------
+BEGIN;
+INSERT INTO `master_jenis` VALUES ('1', 'HVS_A4'), ('2', 'Jenis 1'), ('3', 'Pulpen');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for master_merk
+-- ----------------------------
+DROP TABLE IF EXISTS `master_merk`;
+CREATE TABLE `master_merk` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`nama`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=5
+
+;
+
+-- ----------------------------
+-- Records of master_merk
+-- ----------------------------
+BEGIN;
+INSERT INTO `master_merk` VALUES ('1', 'Sinar Dunia'), ('2', 'Kiky'), ('3', 'Pilot'), ('4', 'Standart');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for master_produk
 -- ----------------------------
 DROP TABLE IF EXISTS `master_produk`;
@@ -144,11 +188,12 @@ CREATE TABLE `master_produk` (
 `warna`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
 `stock`  int(11) NULL DEFAULT NULL ,
 `konversi_satuan_id`  int(11) NULL DEFAULT NULL ,
+`jenis_id`  int(11) NULL DEFAULT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=3
 
 ;
 
@@ -156,6 +201,7 @@ AUTO_INCREMENT=1
 -- Records of master_produk
 -- ----------------------------
 BEGIN;
+INSERT INTO `master_produk` VALUES ('2', 'nama barang', null, null, '', null, '0', '0');
 COMMIT;
 
 -- ----------------------------
@@ -178,6 +224,30 @@ AUTO_INCREMENT=6
 -- ----------------------------
 BEGIN;
 INSERT INTO `master_satuan` VALUES ('1', 'DUS'), ('2', 'BOX'), ('3', 'RIM'), ('4', 'LEMBAR'), ('5', 'PIECES');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for master_suplier
+-- ----------------------------
+DROP TABLE IF EXISTS `master_suplier`;
+CREATE TABLE `master_suplier` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`nama`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`alamat`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`no_telp`  int(25) NULL DEFAULT NULL ,
+`email`  varchar(35) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=1
+
+;
+
+-- ----------------------------
+-- Records of master_suplier
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
@@ -524,14 +594,29 @@ DELIMITER ;
 ALTER TABLE `konversi_satuan` AUTO_INCREMENT=4;
 
 -- ----------------------------
+-- Auto increment value for master_jenis
+-- ----------------------------
+ALTER TABLE `master_jenis` AUTO_INCREMENT=4;
+
+-- ----------------------------
+-- Auto increment value for master_merk
+-- ----------------------------
+ALTER TABLE `master_merk` AUTO_INCREMENT=5;
+
+-- ----------------------------
 -- Auto increment value for master_produk
 -- ----------------------------
-ALTER TABLE `master_produk` AUTO_INCREMENT=1;
+ALTER TABLE `master_produk` AUTO_INCREMENT=3;
 
 -- ----------------------------
 -- Auto increment value for master_satuan
 -- ----------------------------
 ALTER TABLE `master_satuan` AUTO_INCREMENT=6;
+
+-- ----------------------------
+-- Auto increment value for master_suplier
+-- ----------------------------
+ALTER TABLE `master_suplier` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for satuan_besar
