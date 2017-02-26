@@ -61,7 +61,7 @@ function doBrowse(){
                        <th>No</th>
                        <th>Nama</th>
 					   <th>Warna</th>
-					   <th>Merk</th>
+					   <th>Jenis</th>
 					   <th>Satuan</th>
                        <th>Aksi</th>
                     </tr>
@@ -77,7 +77,7 @@ function doBrowse(){
                        <td width="5%"><?php echo $no;?></td>
 					   <td width="20%"><?php echo $result['nama'];?></td>
                        <td width="20%"><?php echo $result['warna'];?></td>
-					   <td width="20%"><?php echo $result['merk'];?></td>
+					   <td width="20%"><?php echo $result['jenis'];?></td>
 					   <td width="20%"><?php echo $result['satuan_terkecil'];?></td>
                        <td width="15%" align="center">
 					   <a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a>&nbsp;
@@ -139,7 +139,7 @@ $(function(){
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
 			<div class="col-md-6">
-			<input type="hidden" value="<?=$results['id']?$results['id']:""?>" name="id" >
+			<input type="hidden"  value=<?=$_GET[id]?$_GET[id]:""?>" name="id" >
 				<div class="form-group">
 					<label>Nama Barang</label>
 					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
@@ -195,7 +195,7 @@ $(function(){
 $(document).ready(function(){
 	$('#form-barang').submit(function(){
 		var act = "add";
-		if($('input[name=id]')){act = "edit";}
+		if($('input[name=id]').val()){act = "edit";}
 		$.post('controllers/master_barang.php?act='+act,$('#form-barang').serialize(),function(data){
 			alert(data);
 			window.location.href = "media.php?mod=barang";
