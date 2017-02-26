@@ -30,7 +30,25 @@ $(function(){
 <?php
 function doBrowse(){
 		$no=0;
-		$query=mysql_query("SELECT * FROM master_produk")or die("gagal".mysql_error());
+		$query=mysql_query("SELECT
+			master_produk.id,
+			master_produk.nama as nama,
+			master_produk.merk_id,
+			master_produk.satuan_id,
+			master_produk.warna as warna,
+			master_produk.stock as stock,
+			master_produk.konversi_satuan_id,
+			master_produk.jenis_id,
+			konversi_satuan.parent,
+			getSatuan(konversi_satuan.satuan_terbesar) satuan_terbesar,
+			getSatuan(konversi_satuan.satuan_terkecil) as satuan_terkecil,
+			master_jenis.nama as jenis,
+			master_merk.nama as merk
+			FROM
+				master_produk
+			LEFT JOIN konversi_satuan ON konversi_satuan.id = master_produk.konversi_satuan_id
+			LEFT JOIN master_jenis ON master_jenis.id = master_produk.jenis_id
+			LEFT JOIN master_merk ON master_merk.id = master_produk.merk_id")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -56,11 +74,11 @@ function doBrowse(){
 			   $no++;
 			   ?>
                     <tr>
-                       <td width="5%"><?php echo"$no";?></td>
+                       <td width="5%"><?php echo $no;?></td>
 					   <td width="20%"><?php echo $result['nama'];?></td>
                        <td width="20%"><?php echo $result['warna'];?></td>
-					   <td width="20%"><?php echo $result['nama'];?></td>
-					   <td width="20%"><?php echo $result[''];?></td>
+					   <td width="20%"><?php echo $result['merk'];?></td>
+					   <td width="20%"><?php echo $result['satuan_terkecil'];?></td>
                        <td width="15%"><a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
                        <a href="aksi.php?mod=barang&act=hapus_barang&id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>

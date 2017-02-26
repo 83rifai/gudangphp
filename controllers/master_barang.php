@@ -11,13 +11,22 @@ if($act == "add"){
 		");
 
 		if($query){
-			echo "Berhasi Disimpan";
+			echo "Berhasil Disimpan";
 		}else{
 			echo "Gagal Disimpan";
 		}
 	}
 }else if($act == "del"){
-	
+	if($_GET['id']){
+		$query =  mysql_query("DELETE FROM master_produk where id = ".$_GET['id']." ");
+		if($queury){
+			echo "Berhasil Dihapus";
+		}else{
+			echo "Gagal Dihapus";
+		}
+	}else{
+		echo "Gagal Dihapus Data Tidak ditemukan ";
+	}
 }else if($act == "edit"){
 	
 }else if($act == "getEdit"){
