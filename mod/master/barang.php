@@ -106,18 +106,53 @@ $(function(){
 
 })
 </script>
+<form>
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Barang</legend>
-
-			<div class="form-group">
-				<label>Email address</label>
-					<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Nama Barang</label>
+					<input type="text" class="form-control" name="nama" placeholder="nama">
 				</div>
 				
+				<div class="form-group">
+					<label>Warna Barang</label>
+					<input type="text" class="form-control" name="warna" placeholder="warna">
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Jenis Barang</label>
+					<select name="id_jenis" class="form-control">
+						<option value="">-Pilih Jenis Barang-</option>
+						<?php
+						$query = mysql_query("select * from master_jenis");
+						while($result = mysql_fetch_assoc($query) ){
+							echo "<option value='".$result['id']."'>".$result['nama']."</option>";
+						}
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Satuan Barang</label>
+					<select name="id_jenis" class="form-control">
+						<option value="">-Pilih Jenis Barang-</option>
+						<?php
+						
+						$query = mysql_query("select * from konversi_satuan");
+						while($result = mysql_fetch_assoc($query) ){
+							echo "<option value='".$result['id']."'>".$result['nama']."</option>";
+						}
+						?>
+					</select>
+				</div>
+			</div>
+			
 		</fieldset>
 	</div>
-
+</form>
 
 <?php
 }
