@@ -77,14 +77,7 @@ elseif($mod=="barang" AND $act=="insert"){
 	$id2		   = $_POST[id];
 	$aksi     	   = $_POST[aksi];
 
-  // echo $_POST[id_jenis]."<br>";
-  // echo $_POST[nm_jenis]."<br>";
-  // echo $_POST[id_warna]."<br>";
-  // echo $_POST[nm_warna]."<br>";
-  // echo $_POST[id_merk]."<br>";
-  // echo $_POST[nm_merk]."<br>";
-  // echo $_POST[id_satuan]."<br>";
-	
+ 
 	
 	echo"insert into barang(id,id_jenis,nm_jenis,id_warna,nm_warna,id_merk,nm_merk,jml_stok)						
 							   VALUES('$id','$id_jenis','$nm_jenis','$id_warna','$nm_warna','$id_merk','$nm_merk','0')";
