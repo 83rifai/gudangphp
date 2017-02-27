@@ -2,33 +2,13 @@
 <link href="./css/bootstrap.css" rel="stylesheet" type="text/css">
 
 
-<script type="text/javascript">	
-$(document).ready(function(){
- $("#jenis1").submit(function(){
-		
-		var nama	= document.getElementById("nama").value;
-		var kode	= document.getElementById("id").value;
-		
-		
-		if(kode == ''){
-            alert("Kode Tidak Boleh Kosong");
-			return false;
-		}else if(nama == ''){
-			alert("Nama Tidak Boleh Kosong");
-			return false; 
-		}
-        
-    });
 
-});
-
-</script>
    
 <?php
 
 function doBrowse(){
-		$no=0;
-		$query=mysql_query("select * from jenis")or die("gagal".mysql_error());
+		$no = 0;
+		$query = mysql_query("select * from master_jenis")or die("gagal".mysql_error());
 		
 ?>
      <div class="tabelku">
@@ -48,14 +28,14 @@ function doBrowse(){
                <tbody>
                
                <?php
-			   while($r=mysql_fetch_array($query)){
+			   while($result = mysql_fetch_assoc($query)){
 			   $no++;
 			   ?>
                     <tr>
                        <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_jenis]";?></td>
-                       <td width="15%"><a href="?mod=jenis&act=editjenis&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=jenis&act=hapus_jenis&id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+					   <td width="35%"><?php echo $result['nama'];?></td>
+                       <td width="15%"><a href="?mod=jenis&act=editjenis&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
+                       <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_jenis.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     </tr>
                <?php
@@ -65,67 +45,72 @@ function doBrowse(){
         </table>
     </div>
     
+
+    <script type="text/javascript">
+	function DelData(Url){
+		$.post(Url,function(data){
+			alert(data);
+			window.location.reload();
+		});
+		return false;
+		
+	}
+	</script>
 <?php
     }
-    /////// function tambah ////////
+    
+    // function method add
+
     function doAdd(){
-    $aksi = $_GET[act];  
+    $aksi = $_GET['act'];
+    if($_GET['id']){
+    	$queries = mysql_query("select * from master_jenis where id = ".$_GET['id']." ");
+		$results = mysql_fetch_assoc($queries);
+    }  
 ?>
-<div class="tabelku col-md-5">
-	<div class="box-body">
-    <div class="content-header"><h3><b><label>Data Jenis Barang</label></b><h3></a></div>
-		<form action="aksi.php?mod=jenis&act=insert" method="post" id="jenis1" enctype="multipart/form-data">
-		 
-		 <?php
+
+<form id="form-jenis" method="post" action="<?=$_GET['id']?>">
+	<div class="col-md-10">
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Jenis</legend>
+			<div class="col-md-6">
+			<input type="hidden"  value=<?=$_GET[id]?$_GET[id]:""?>" name="id" >
+				<div class="form-group">
+					<label>Nama Barang</label>
+					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
+				</div>
 				
-				if($aksi == "editjenis"){
-           	        $edit=mysql_query("SELECT * FROM jenis where id='$_GET[id]'");
-	                $d=mysql_fetch_array($edit);   
-           	       }
-            ?> 
-				
-		<input type="hidden" name="id2" id="id2" value="<?php echo"$_GET[id]";?>" />
-        <input type="hidden" name="aksi" id="aksi" value="<?php echo"$aksi";?>" />
-        	
-			<?php if( $aksi == "addjenis" ) {?>
-				<div class="form-group">
-				   <label>Kode Jenis</label>
-				   <input class="form-control" placeholder="Kode Jenis" name="id" id="id" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Kode Jenis</label>
-				   <input class="form-control" placeholder="Kode Jenis" name="id" id="id" type="text" value="<?php echo"$d[id]"?>"  >
-				</div>
-			<?php }?>
+			</div>
 			
-			<?php if( $aksi == "addjenis" ) {?>
-				<div class="form-group">
-				   <label>Jenis Barang</label>
-				   <input class="form-control" placeholder="Jenis Barang" name="nama" id="nama" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Jenis Barang</label>
-				   <input class="form-control" placeholder="Jenis Barang" name="nama" id="nama" type="text" value="<?php echo"$d[nm_jenis]"?>"  >
-				</div>
-			<?php }?>
-			
-			
-            <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="simpan">
-               <input type="button" class="btn btn-danger" onClick='self.history.back()'  value="batal">
-			</div>                             
-		</form>
+			<div class="col-md-10">
+				<input type="submit" name="Simpan" value="Simpan" class="btn btn-primary btn-md">
+			</div>
+		</fieldset>
 	</div>
-</div>
+	
+</form>
+
+<script>
+$(document).ready(function(){
+	$('#form-jenis').submit(function(){
+		var act = "add";
+		if($('input[name=id]').val()){act = "edit";}
+		$.post('controllers/master_jenis.php?act='+act,$('#form-jenis').serialize(),function(data){
+			alert(data);
+			window.location.href = "media.php?mod=jenis";
+		});
+		return false;
+	}); // end function submit
+}); // end function document
+</script>
+
 <?php
 }
-/////// akhir function tambah ////////
+ // end function method add
 ?>
 
 <?php
-/////// akhir function edit //////// 
+ // end function method add 
 switch($_GET['act']){
     default:
         doBrowse();
