@@ -51,7 +51,7 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 
 function doBrowse(){
 		$no=0;
-		$query=mysql_query("select * from pelanggan")or die("gagal".mysql_error());
+		$query=mysql_query("select * from master_pelanggan")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -73,16 +73,16 @@ function doBrowse(){
                <tbody>
                
                <?php
-			   while($r=mysql_fetch_array($query)){
+			   while($result = mysql_fetch_assoc($query)){
 			   $no++;
 			   ?>
                     <tr>
                        <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_pelanggan]";?></td>
-                       <td width="25%"><?php echo"$r[almt_pelanggan]";?></td>
-					   <td width="20%"><?php echo"$r[no_telp]";?> / <br><?php echo"$r[email]";?></td>
-                       <td width="15%"><a href="?mod=pelanggan&act=editpelanggan&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=pelanggan&act=hapus_pelanggan&id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+					   <td width="35%"><?php echo $result['nama'];?></td>
+                       <td width="25%"><?php echo $result['alamat'];?></td>
+					   <td width="20%"><?php echo $result['no_telp'];?> / <br><?php echo $result['email'];?></td>
+                       <td width="15%"><a href="?mod=pelanggan&act=editpelanggan&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
+                       <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_pelanggan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     </tr>
                <?php
@@ -94,91 +94,75 @@ function doBrowse(){
     
 <?php
     }
-    /////// function tambah ////////
+    
+    // this method for add new data
     function doAdd(){
-    $aksi = $_GET[act];  
+    $aksi = $_GET['act'];
+    if($_GET['id']){
+    	$queries = mysql_query("select * from master_pelanggan where id = ".$_GET['id']." ");
+		$results = mysql_fetch_assoc($queries);
+    }
 ?>
-<div class="tabelku col-md-5">
-	<div class="box-body">
-    <div class="content-header"><h3><b><label>Data Pelanggan</label></b><h3></a></div>
-		<form action="aksi.php?mod=pelanggan&act=insert" method="post" id="pelanggan1" enctype="multipart/form-data">
-		 
-		 <?php
-				$no_max=mysql_query("SELECT ifnull(max(id),0)+1 AS reg  FROM pelanggan");
-	            $n=mysql_fetch_array($no_max);
+
+<form id="form-pelanggan" method="post" action="<?=$_GET['id']?>">
+	<div class="col-md-10">
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Pelanggan</legend>
+			<div class="col-md-6">
+			<input type="hidden"  value=<?=$_GET['id']?$_GET['id']:""?>" name="id" >
+				<div class="form-group">
+					<label>Nama Pelanggan</label>
+					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="Nama">
+				</div>
 				
-				if($aksi == "editpelanggan"){
-           	        $edit=mysql_query("SELECT * FROM pelanggan where id='$_GET[id]'");
-	                $d=mysql_fetch_array($edit);   
-           	       }
-            ?> 
+				<div class="form-group">
+					<label>Alamat Pelanggan</label>
+					<input type="text" class="form-control" value="<?=$results['alamat']?$results['alamat']:""?>" name="alamat" placeholder="Alamat">
+				</div>
+			</div>
+			
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Nomor Telephone</label>
+					<input type="text" class="form-control" value="<?=$results['no_telp']?$results['no_telp']:""?>" name="no_telp" placeholder="Nomor Telephone">
+				</div>
 				
-        <input type="hidden" name="id" id="id" value="<?php echo"$n[reg]";?>" />
-		<input type="hidden" name="id2" id="id2" value="<?php echo"$_GET[id]";?>" />
-        <input type="hidden" name="aksi" id="aksi" value="<?php echo"$aksi";?>" />
-        	
-			<?php if( $aksi == "addpelanggan" ) {?>
 				<div class="form-group">
-				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Pelanggan" name="nm_pelanggan" id="nm_pelanggan" type="text" >
+					<label>Email</label>
+					<input type="text" class="form-control" value="<?=$results['email']?$results['email']:""?>" name="email" placeholder="Email">
 				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Nama (Perusahaan)</label>
-				   <input class="form-control" placeholder="Nama Pelanggan" name="nm_pelanggan" id="nm_pelanggan" type="text" value="<?php echo"$d[nm_pelanggan]"?>"  >
-				</div>
-			<?php }?>
+			</div>
 			
-			<?php if( $aksi == "addpelanggan" ) {?>
-				<div class="form-group">
-				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Pelanggan" name="almt_pelanggan" id="almt_pelanggan" type="text"></textarea>
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Alamat </label>
-				   <textarea class="form-control" placeholder="Alamat Pelanggan" name="almt_pelanggan" id="almt_pelanggan" type="text"><?php echo"$d[almt_pelanggan]"?></textarea>
-				</div>
-			<?php }?>
-			
-			<?php if( $aksi == "addpelanggan" ) {?>
-				<div class="form-group">
-				   <label>No Telp </label>
-				   <input class="form-control" placeholder="No telp Pelanggan" name="no_telp" id="no_telp" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>No Telp</label>
-				   <input class="form-control" placeholder="No telp Pelanggan" name="no_telp" id="no_telp" type="text" value="<?php echo"$d[no_telp]"?>"  >
-				</div>
-			<?php }?>
-			
-			<?php if( $aksi == "addpelanggan" ) {?>
-				<div class="form-group">
-				   <label>Email </label>
-				   <input class="form-control" placeholder="Email Pelanggan" name="email" id="email" type="text" >
-				</div>
-			<?php } else {?>
-				<div class="form-group">
-				   <label>Email</label>
-				   <input class="form-control" placeholder="Email Pelanggan" name="email" id="email" type="text" value="<?php echo"$d[email]"?>"  >
-				</div>
-			<?php }?>
-			
-            <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="simpan">
-               <input type="button" class="btn btn-danger" onClick='self.history.back()'  value="batal">
-			</div>                             
-		</form>
+			<div class="col-md-10">
+				<input type="submit" name="Simpan" value="Simpan" class="btn btn-primary btn-md">
+			</div>
+		</fieldset>
 	</div>
-</div>
+	
+</form>
+
+<script>
+$(document).ready(function(){
+	$('#form-pelanggan').submit(function(){
+		var act = "add";
+		if($('input[name=id]').val()){act = "edit";}
+		$.post('controllers/master_pelanggan.php?act='+act,$('#form-pelanggan').serialize(),function(data){
+			alert(data);
+			window.location.href = "media.php?mod=pelanggan";
+		});
+		return false;
+	}); // end function submit
+}); // end function document
+</script>
+
+
 <?php
 }
-/////// akhir function tambah ////////
+ // method add end
 ?>
 
 <?php
-/////// akhir function edit //////// 
+ // method edit end 
 switch($_GET['act']){
     default:
         doBrowse();
