@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : LOCALHOST
-Source Server Version : 50534
-Source Host           : localhost:3306
+Source Server         : 127.0.0.1
+Source Server Version : 50516
+Source Host           : 127.0.0.1:3306
 Source Database       : gudang
 
 Target Server Type    : MYSQL
-Target Server Version : 50534
+Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2017-02-26 15:17:42
+Date: 2017-02-27 21:40:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,27 +63,6 @@ DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
 -- ----------------------------
 BEGIN;
 INSERT INTO `besar` VALUES ('S1', 'Satuan Besar', '1'), ('S2', 'dus', '1'), ('S3', 'box', '1');
-COMMIT;
-
--- ----------------------------
--- Table structure for jenis
--- ----------------------------
-DROP TABLE IF EXISTS `jenis`;
-CREATE TABLE `jenis` (
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`nm_jenis`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of jenis
--- ----------------------------
-BEGIN;
-INSERT INTO `jenis` VALUES ('HA1', 'HVS_A4'), ('J1', 'Jenis 1'), ('P1', 'Pulpen');
 COMMIT;
 
 -- ----------------------------
@@ -151,7 +130,7 @@ AUTO_INCREMENT=4
 -- Records of master_jenis
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_jenis` VALUES ('1', 'HVS_A4'), ('2', 'Jenis 1'), ('3', 'Pulpen');
+INSERT INTO `master_jenis` VALUES ('1', 'HVS_A4');
 COMMIT;
 
 -- ----------------------------
@@ -177,6 +156,29 @@ INSERT INTO `master_merk` VALUES ('1', 'Sinar Dunia'), ('2', 'Kiky'), ('3', 'Pil
 COMMIT;
 
 -- ----------------------------
+-- Table structure for master_pelanggan
+-- ----------------------------
+DROP TABLE IF EXISTS `master_pelanggan`;
+CREATE TABLE `master_pelanggan` (
+`id`  int(25) NOT NULL ,
+`nama`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`alamat`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`no_telp`  int(25) NULL DEFAULT NULL ,
+`email`  varchar(35) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+
+;
+
+-- ----------------------------
+-- Records of master_pelanggan
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for master_produk
 -- ----------------------------
 DROP TABLE IF EXISTS `master_produk`;
@@ -186,9 +188,10 @@ CREATE TABLE `master_produk` (
 `merk_id`  int(11) NULL DEFAULT NULL ,
 `satuan_id`  int(11) NULL DEFAULT NULL ,
 `warna`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`stock`  int(11) NULL DEFAULT NULL ,
+`stock`  int(11) NULL DEFAULT 0 ,
 `konversi_satuan_id`  int(11) NULL DEFAULT NULL ,
 `jenis_id`  int(11) NULL DEFAULT NULL ,
+`kode`  varchar(12) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
@@ -201,7 +204,7 @@ AUTO_INCREMENT=3
 -- Records of master_produk
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_produk` VALUES ('2', 'nama barang', null, null, '', null, '0', '0');
+INSERT INTO `master_produk` VALUES ('2', 'nama barang', null, null, '', null, '0', '0', null);
 COMMIT;
 
 -- ----------------------------
@@ -240,7 +243,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=2
 
 ;
 
@@ -248,6 +251,7 @@ AUTO_INCREMENT=1
 -- Records of master_suplier
 -- ----------------------------
 BEGIN;
+INSERT INTO `master_suplier` VALUES ('1', 'Supplier', null, null, null);
 COMMIT;
 
 -- ----------------------------
@@ -552,27 +556,6 @@ INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ad
 COMMIT;
 
 -- ----------------------------
--- Table structure for warna
--- ----------------------------
-DROP TABLE IF EXISTS `warna`;
-CREATE TABLE `warna` (
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`nm_warna`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of warna
--- ----------------------------
-BEGIN;
-INSERT INTO `warna` VALUES ('M1', 'Merah'), ('P1', 'Putih'), ('W1', 'Warna 1');
-COMMIT;
-
--- ----------------------------
 -- Function structure for getSatuan
 -- ----------------------------
 DROP FUNCTION IF EXISTS `getSatuan`;
@@ -602,6 +585,22 @@ ALTER TABLE `master_jenis` AUTO_INCREMENT=4;
 -- Auto increment value for master_merk
 -- ----------------------------
 ALTER TABLE `master_merk` AUTO_INCREMENT=5;
+DROP TRIGGER IF EXISTS `auto_code`;
+DELIMITER ;;
+CREATE TRIGGER `auto_code` BEFORE INSERT ON `master_produk` FOR EACH ROW begin
+
+DECLARE _first VARCHAR(20);
+DECLARE _second VARCHAR(20);
+
+
+SET _first = UPPER(SUBSTR(NEW.nama,1,1));
+
+SELECT LPAD(IFNULL(MAX(SUBSTR(kode,2,4))+1,1),4,'0') INTO _second FROM master_produk WHERE SUBSTR(kode,1,1) = _first;
+
+SET NEW.kode = CONCAT(_first,_second);
+end
+;;
+DELIMITER ;
 
 -- ----------------------------
 -- Auto increment value for master_produk
@@ -616,7 +615,7 @@ ALTER TABLE `master_satuan` AUTO_INCREMENT=6;
 -- ----------------------------
 -- Auto increment value for master_suplier
 -- ----------------------------
-ALTER TABLE `master_suplier` AUTO_INCREMENT=1;
+ALTER TABLE `master_suplier` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for satuan_besar
