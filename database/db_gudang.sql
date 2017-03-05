@@ -10,81 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2017-02-27 21:40:56
+Date: 2017-03-05 23:14:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for barang
--- ----------------------------
-DROP TABLE IF EXISTS `barang`;
-CREATE TABLE `barang` (
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`id_satuan`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`id_jenis`  int(25) NULL DEFAULT NULL ,
-`nm_jenis`  varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`id_warna`  int(25) NULL DEFAULT NULL ,
-`nm_warna`  varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`id_merk`  int(25) NULL DEFAULT NULL ,
-`nm_merk`  varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`jml_stok`  int(25) NULL DEFAULT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of barang
--- ----------------------------
-BEGIN;
-INSERT INTO `barang` VALUES ('1', null, null, null, null, null, null, null, null), ('HA1.M1.M1.S1.S1.K1', 'S1.S1.K1', '0', 'HVS_A4', '0', 'Merah', '0', 'Merah', '0'), ('HA1.P1.N1.S3.S2.K2', 'S3.S2.K2', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '8'), ('HA1.P1.N1.S3.S2.K3', 'S3.S2.K3', '0', 'HVS_A4', '0', 'Putih', '0', 'Putih', '2');
-COMMIT;
-
--- ----------------------------
--- Table structure for besar
--- ----------------------------
-DROP TABLE IF EXISTS `besar`;
-CREATE TABLE `besar` (
-`id`  varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`nama`  varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`jumlah`  int(15) NULL DEFAULT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of besar
--- ----------------------------
-BEGIN;
-INSERT INTO `besar` VALUES ('S1', 'Satuan Besar', '1'), ('S2', 'dus', '1'), ('S3', 'box', '1');
-COMMIT;
-
--- ----------------------------
--- Table structure for kecil
--- ----------------------------
-DROP TABLE IF EXISTS `kecil`;
-CREATE TABLE `kecil` (
-`id`  varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`nama`  varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`jumlah`  int(15) NULL DEFAULT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of kecil
--- ----------------------------
-BEGIN;
-COMMIT;
 
 -- ----------------------------
 -- Table structure for konversi_satuan
@@ -122,7 +51,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=4
+AUTO_INCREMENT=2
 
 ;
 
@@ -196,7 +125,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=3
+AUTO_INCREMENT=1
 
 ;
 
@@ -204,7 +133,6 @@ AUTO_INCREMENT=3
 -- Records of master_produk
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_produk` VALUES ('2', 'nama barang', null, null, '', null, '0', '0', null);
 COMMIT;
 
 -- ----------------------------
@@ -436,100 +364,151 @@ BEGIN;
 COMMIT;
 
 -- ----------------------------
--- Table structure for td_brg_keluar
+-- Table structure for trans_produk_keluar_detail
 -- ----------------------------
-DROP TABLE IF EXISTS `td_brg_keluar`;
-CREATE TABLE `td_brg_keluar` (
-`kd_tr`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`kd_barang`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`satuan`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`kd_satuan`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`jumlah`  int(20) NULL DEFAULT NULL ,
-`jml_konversi`  int(20) NULL DEFAULT NULL 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of td_brg_keluar
--- ----------------------------
-BEGIN;
-INSERT INTO `td_brg_keluar` VALUES ('BM-1602170011', 'BM-160217001', 'HA1.P1.N1.S3.S2.K2', 'rim', 'K2', '2', '2'), ('BM-2402170021', 'BM-240217002', 'HA1.P1.N1.S3.S2.K3', 'rim', 'K3', '1', '1'), ('BM-2402170021', 'BM-240217002', 'HA1.P1.N1.S3.S2.K2', 'rim', 'K2', '1', '1');
-COMMIT;
-
--- ----------------------------
--- Table structure for td_brg_masuk
--- ----------------------------
-DROP TABLE IF EXISTS `td_brg_masuk`;
-CREATE TABLE `td_brg_masuk` (
-`kd_tr`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`kd_barang`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`satuan`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`kd_satuan`  varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`jumlah`  int(20) NULL DEFAULT NULL ,
-`jml_konversi`  int(20) NULL DEFAULT NULL 
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of td_brg_masuk
--- ----------------------------
-BEGIN;
-INSERT INTO `td_brg_masuk` VALUES ('BM-1602170011', 'BM-160217001', 'HA1.P1.N1.S3.S2.K2', 'box', 'S2', '1', '5'), ('BM-1602170021', 'BM-160217002', 'HA1.P1.N1.S3.S2.K2', 'rim', 'K2', '5', '5'), ('BM-1602170031', 'BM-160217003', 'HA1.P1.N1.S3.S2.K2', 'rim', 'K2', '1', '1'), ('BM-2402170041', 'BM-240217004', 'HA1.P1.N1.S3.S2.K3', 'rim', 'K3', '3', '3');
-COMMIT;
-
--- ----------------------------
--- Table structure for tr_brg_keluar
--- ----------------------------
-DROP TABLE IF EXISTS `tr_brg_keluar`;
-CREATE TABLE `tr_brg_keluar` (
-`id`  varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`tgl_keluar`  date NULL DEFAULT NULL ,
-`no`  varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`no_po`  varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`id_pelanggan`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+DROP TABLE IF EXISTS `trans_produk_keluar_detail`;
+CREATE TABLE `trans_produk_keluar_detail` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`trans_produk_keluar_id`  int(11) NULL DEFAULT NULL ,
+`master_produk_id`  int(11) NULL DEFAULT NULL ,
+`master_satuan_id`  int(11) NULL DEFAULT NULL ,
+`konversi_satuan_id`  int(11) NULL DEFAULT NULL ,
+`jumlah`  int(11) NULL DEFAULT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=4
 
 ;
 
 -- ----------------------------
--- Records of tr_brg_keluar
+-- Records of trans_produk_keluar_detail
 -- ----------------------------
 BEGIN;
-INSERT INTO `tr_brg_keluar` VALUES ('BM-160217001', '2017-02-16', '1abc', '1234', '2'), ('BM-240217002', '2017-02-24', '12345', '123456', '2');
+INSERT INTO `trans_produk_keluar_detail` VALUES ('1', null, null, null, null, null), ('2', null, null, null, null, null), ('3', null, null, null, null, null);
 COMMIT;
 
 -- ----------------------------
--- Table structure for tr_brg_masuk
+-- Table structure for trans_produk_keluar_header
 -- ----------------------------
-DROP TABLE IF EXISTS `tr_brg_masuk`;
-CREATE TABLE `tr_brg_masuk` (
-`id`  varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`tgl_masuk`  date NULL DEFAULT NULL ,
-`no`  int(20) NULL DEFAULT NULL ,
-`id_suplier`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+DROP TABLE IF EXISTS `trans_produk_keluar_header`;
+CREATE TABLE `trans_produk_keluar_header` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`nomor_transaksi`  varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`tanggal`  date NULL DEFAULT NULL ,
+`master_pelanggan_id`  int(11) NULL DEFAULT NULL ,
+`purchase_order`  varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`delivery_order`  varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=3
 
 ;
 
 -- ----------------------------
--- Records of tr_brg_masuk
+-- Records of trans_produk_keluar_header
 -- ----------------------------
 BEGIN;
-INSERT INTO `tr_brg_masuk` VALUES ('BM-160217001', '2017-02-16', '1', ''), ('BM-160217002', '2017-02-16', '2', ''), ('BM-160217003', '2017-02-16', '3', ''), ('BM-240217004', '2017-02-24', '4', '');
+INSERT INTO `trans_produk_keluar_header` VALUES ('1', null, null, null, null, null), ('2', null, null, null, null, null);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for trans_produk_masuk_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_produk_masuk_detail`;
+CREATE TABLE `trans_produk_masuk_detail` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`master_produk_id`  int(11) NULL DEFAULT NULL ,
+`jumlah`  int(11) NULL DEFAULT NULL ,
+`konversi_satuan_id`  int(11) NULL DEFAULT NULL ,
+`trans_produk_masuk_header_id`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=1
+
+;
+
+-- ----------------------------
+-- Records of trans_produk_masuk_detail
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for trans_produk_masuk_header
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_produk_masuk_header`;
+CREATE TABLE `trans_produk_masuk_header` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`tanggal`  date NULL DEFAULT NULL ,
+`nomor_transaksi`  varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`id_suplier`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=8
+
+;
+
+-- ----------------------------
+-- Records of trans_produk_masuk_header
+-- ----------------------------
+BEGIN;
+INSERT INTO `trans_produk_masuk_header` VALUES ('3', '2017-02-28', 'BM-280217001', '1'), ('4', '2017-02-28', 'BM-280217001', '1'), ('5', '2017-02-28', 'BM-280217001', '1'), ('6', '2017-02-28', 'BM-280217001', '1'), ('7', '2017-02-28', 'BM-280217001', '1');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for trans_produk_retur_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_produk_retur_detail`;
+CREATE TABLE `trans_produk_retur_detail` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`master_produk_id`  int(11) NULL DEFAULT NULL ,
+`jumlah`  int(11) NULL DEFAULT NULL ,
+`konversi_satuan_id`  int(11) NULL DEFAULT NULL ,
+`trans_produk_masuk_header_id`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=1
+
+;
+
+-- ----------------------------
+-- Records of trans_produk_retur_detail
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for trans_produk_retur_header
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_produk_retur_header`;
+CREATE TABLE `trans_produk_retur_header` (
+`id`  int(11) NOT NULL AUTO_INCREMENT ,
+`tanggal`  date NULL DEFAULT NULL ,
+`nomor_transaksi`  varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
+`id_suplier`  int(11) NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
+AUTO_INCREMENT=8
+
+;
+
+-- ----------------------------
+-- Records of trans_produk_retur_header
+-- ----------------------------
+BEGIN;
+INSERT INTO `trans_produk_retur_header` VALUES ('3', '2017-02-28', 'BM-280217001', '1'), ('4', '2017-02-28', 'BM-280217001', '1'), ('5', '2017-02-28', 'BM-280217001', '1'), ('6', '2017-02-28', 'BM-280217001', '1'), ('7', '2017-02-28', 'BM-280217001', '1');
 COMMIT;
 
 -- ----------------------------
@@ -579,7 +558,7 @@ ALTER TABLE `konversi_satuan` AUTO_INCREMENT=4;
 -- ----------------------------
 -- Auto increment value for master_jenis
 -- ----------------------------
-ALTER TABLE `master_jenis` AUTO_INCREMENT=4;
+ALTER TABLE `master_jenis` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for master_merk
@@ -605,7 +584,7 @@ DELIMITER ;
 -- ----------------------------
 -- Auto increment value for master_produk
 -- ----------------------------
-ALTER TABLE `master_produk` AUTO_INCREMENT=3;
+ALTER TABLE `master_produk` AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Auto increment value for master_satuan
@@ -631,3 +610,81 @@ ALTER TABLE `satuan_kecil` AUTO_INCREMENT=2;
 -- Auto increment value for satuan_sedang
 -- ----------------------------
 ALTER TABLE `satuan_sedang` AUTO_INCREMENT=2;
+DROP TRIGGER IF EXISTS `auto_update_stock_keluar`;
+DELIMITER ;;
+CREATE TRIGGER `auto_update_stock_keluar` AFTER INSERT ON `trans_produk_keluar_detail` FOR EACH ROW BEGIN
+
+DECLARE OLDstock int(11);
+DECLARE sum int(11);
+
+SELECT IFNULL(master_produk.stock,0)  INTO OLDstock FROM master_produk WHERE master_produk.id =NEW.master_produk_id;
+
+SET sum = OLDstock - NEW.jumlah;
+
+UPDATE master_produk SET master_produk.stock = sum where master_produk.id = NEW.master_produk_id;
+
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_keluar_detail
+-- ----------------------------
+ALTER TABLE `trans_produk_keluar_detail` AUTO_INCREMENT=4;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_keluar_header
+-- ----------------------------
+ALTER TABLE `trans_produk_keluar_header` AUTO_INCREMENT=3;
+DROP TRIGGER IF EXISTS `auto_update_stock_masuk`;
+DELIMITER ;;
+CREATE TRIGGER `auto_update_stock_masuk` AFTER INSERT ON `trans_produk_masuk_detail` FOR EACH ROW BEGIN
+
+DECLARE OLDstock int(11);
+DECLARE sum int(11);
+
+SELECT IFNULL(master_produk.stock,0)  INTO OLDstock FROM master_produk WHERE master_produk.id =NEW.master_produk_id;
+
+SET sum = OLDstock + NEW.jumlah;
+
+UPDATE master_produk SET master_produk.stock = sum where master_produk.id = NEW.master_produk_id;
+
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_masuk_detail
+-- ----------------------------
+ALTER TABLE `trans_produk_masuk_detail` AUTO_INCREMENT=1;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_masuk_header
+-- ----------------------------
+ALTER TABLE `trans_produk_masuk_header` AUTO_INCREMENT=8;
+DROP TRIGGER IF EXISTS `auto_update_stock_masuk_copy`;
+DELIMITER ;;
+CREATE TRIGGER `auto_update_stock_masuk_copy` AFTER INSERT ON `trans_produk_retur_detail` FOR EACH ROW BEGIN
+
+DECLARE OLDstock int(11);
+DECLARE sum int(11);
+
+SELECT IFNULL(master_produk.stock,0)  INTO OLDstock FROM master_produk WHERE master_produk.id =NEW.master_produk_id;
+
+SET sum = OLDstock + NEW.jumlah;
+
+UPDATE master_produk SET master_produk.stock = sum where master_produk.id = NEW.master_produk_id;
+
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_retur_detail
+-- ----------------------------
+ALTER TABLE `trans_produk_retur_detail` AUTO_INCREMENT=1;
+
+-- ----------------------------
+-- Auto increment value for trans_produk_retur_header
+-- ----------------------------
+ALTER TABLE `trans_produk_retur_header` AUTO_INCREMENT=8;

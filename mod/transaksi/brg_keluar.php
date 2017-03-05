@@ -221,7 +221,7 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 function doBrowse(){
 $lvl = $_SESSION['level'];
 		$no=0;
-		$query=mysql_query("select * from tr_brg_keluar")or die("gagal".mysql_error());
+		$query=mysql_query("select * from trans_produk_keluar_header")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -348,316 +348,178 @@ $id	 = $_GET[id];
  
 <?php
 }
-    /////// function tambah ////////
-    function doAdd(){
-    $aksi = $_GET[act]; 
-?>
-	<div class="tabelku col-md-11">
-	<div class="box-body">
-    
-		<form action="mod\transaksi\aksi\tr_keluar.php" method="post" id="brg_keluar1" enctype="multipart/form-data" >
-		 <?php
-				$thn_skr = date('d-m-Y');
-				$date	= explode('-',$thn_skr);
-				$tgl	= $date[0];
-				$bln	= $date[1];
-				$thn	= $date[2];
-				$th		= substr($thn , 2 ,2);
-				$no_max=mysql_query("SELECT ifnull(max(no),0)+1 AS reg  FROM tr_brg_keluar");
-	            $n=mysql_fetch_array($no_max);   
-                
-				$no_tr= "BM-"."$tgl$bln$th"."00".$n[reg];
-				
-            ?>       
-        <input type="hidden" name="id" id="id" value="<?php echo"$_GET[id]";?>" />
-        <input type="hidden" name="number" id="numbercount" value="0" />		
-        <input type="hidden" name="aksi" id="aksi" value="<?php echo"$aksi";?>" />
-          <table>	
-			<div class="form-group">
-                <div class="col-md-12">
-					<label style="font-size:24px;">Input Barang keluar</label> 
-				</div>
-			</div>	
-				<br><br><br>
-			<div class="form-group col-lg-12">
-				<div class="col-md-1">
-					<label>Tanggal</label> 
-				</div>
-				<div class="col-md-4">		
-					<div class='input-group date' id='tgl' name='tgl' >
-                        <input type='text' class="form-control" id="tgl" name="tgl" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-				</div>
-				<div class="col-md-2">
-					<label>No Surat Jalan</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Nomor Surat Jalan" name="no_tr_masuk" id="no_tr_masuk" type="text" required>
-				</div>
-			</div>
-            
-            <div class="form-group col-lg-12">
-				<div class="col-md-5"></div>
-				<div class="col-md-2">
-					<label>No PO</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Nomor PO" name="no_po" id="no_po" type="text" >
-				</div>	
-			</div>
-            
-			<div class="form-group col-lg-12">
-				<div class="col-md-5"></div>
-				<div class="col-md-2">
-					<label>No Transaksi</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_keluar" id="kd_tr_keluar" type="text" value="<?php echo"$no_tr"?>" readonly="">
-				</div>	
-			</div>
-			<br><br>
-			<div class="form-group col-lg-12">
-				<div class="col-md-1">
-					<label>Pelanggan</label> 
-				</div>
-				<div class="col-md-3">
-					<?php echo"<select name='id_pelanggan' id='id_pelanggan' class='form-control'>
-                                  <option value='' selected>- Pilih Pelanggan -</option>";
-                   	   $tampil=mysql_query("SELECT * FROM pelanggan ");
-                   	   while($v=mysql_fetch_array($tampil)){
-                            echo "<option value='$v[id]'>$v[nm_pelanggan]</option>";
-                       }
-                            echo "</select>";
-					?>
-				</div>
-			</div>
-			<br><br>
-			<div class="form-group col-lg-12">
-				<div class="col-md-1">
-					<label>Barang</label>
-				</div>
-				<div class="col-md-4">
-					<input class="form-control" placeholder="Nama Barang" name="nm_barang[]" id="nm_barang" type="text" readonly="">
-					<input class="form-control" name="kd_barang[]" id="kd_barang" type="hidden" >
-					<input class="form-control" name="id_satuan[]" id="id_satuan" type="hidden" >
-				</div>
-				<div class="col-md-1">
-					<input class="btn btn-info" type="button" value="cari" id="cari" onclick="tombol2()"> 
-				</div>
-				<div class="col-md-1"></div>
-				<div class="col-md-2">
-					<label>Jumlah Stok</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" name="jum_masuk[]" id="jum_masuk" type="text" readonly="">
-				</div>	
-			</div>
-			<br><p></br>
-			<div class="form-group col-lg-12">
-				<div class="col-md-1">
-					<label>Satuan</label> 
-				</div>
-				<div class="col-md-4">		
-					<input class="form-control" placeholder="Satuan Barang" name="kd_satuan[]" id="kd_satuan" type="text" readonly="">
-				    <input class="form-control" name="satuan[]" id="satuan" type="hidden" >
-				    <input class="form-control" name="jum_x[]" id="jum_x" type="hidden" >
-				</div>
-				<div class="col-md-1">
-					<input class="btn btn-info" type="button" value="cari" id="cari" onclick="tombol3()"> 
-				</div>
-				<div class="col-md-1"></div>
-				<div class="col-md-2">
-					<label>Jumlah</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Jumlah Barang" name="jumlah[]" id="jumlah" type="text"  onKeyUp="total()">
-					<input class="form-control" name="jum_tot[]" id="jum_tot" type="text" >
-				</div>	
-			</div>
-			
-			<br></br>
-		   </table>
-            <div class="form-group col-lg-12" >
-               <input type="submit" class="btn btn-info" value="simpan">
-			   <input type="button" class="btn btn-info" id="tambah" value="tambah" onclick="addbarang()">
-               <input type="button" class="btn btn-danger" onClick='self.history.back()'  value="Keluar">
-			</div>
-		   	<table class="table table-bordered" id="tabletambah">
-				<thead>
-				  <tr id="dt_barang">
-					<th width="75%">Nama Barang</th>
-					<th width="10%">Jumlah</th>
-					<th width="10%">Satuan</th>
-					<th width="5%">Hapus</th>
-				  </tr>
-				</thead>
-				<tbody>
-					<tr id="dat"></tr>
-				</tbody>
-			  </table>	
-		</form>
-	</div>
-</div>
-<?php
-}
 
-function doEdit(){
-    $aksi = $_GET[act]; 
+function doAdd(){ // strat function do add
+
+$aksi = $_GET['act']; 
+$thn_skr = date('d-m-Y');
+$date	= explode('-',$thn_skr);
+$tgl	= $date[0];
+$bln	= $date[1];
+$thn	= $date[2];
+$th		= substr($thn , 2 ,2);
+$no_max = mysql_query("SELECT ifnull(max(no),0)+1 AS reg  FROM tr_brg_keluar");
+$n = mysql_fetch_array($no_max);   
+$no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
+
+
 ?>
-	<div class="tabelku col-md-11">
-	<div class="box-body">
-    
-		<form action="mod\transaksi\aksi\tr_keluar.php" method="post" id="brg_keluar1" enctype="multipart/form-data" >
-		 <?php
-				$thn_skr = date('d-m-Y');
-				$date	= explode('-',$thn_skr);
-				$tgl	= $date[0];
-				$bln	= $date[1];
-				$thn	= $date[2];
-				$th		= substr($thn , 2 ,2);
-				$no_max=mysql_query("SELECT ifnull(max(no),0)+1 AS reg  FROM tr_brg_keluar");
-	            $n=mysql_fetch_array($no_max);   
-                
-				$no_tr= "BM-"."$tgl$bln$th"."00".$n[reg];
-				$edit=mysql_query("SELECT a.id as no_tr,a.tgl_keluar,b.*,d.nm_barang FROM tr_brg_keluar a
-								   INNER JOIN td_brg_keluar b ON a.id=b.id
-								   LEFT JOIN satuan c ON b.kd_barang=c.id
-								   LEFT JOIN barang d ON c.kd_barang=d.id
-								   WHERE  a.id='$_GET[id]'");
-	            $d=mysql_fetch_array($edit);   
-           	      
-            ?>       
-        <input type="hidden" name="id" id="id" value="<?php echo"$_GET[id]";?>" />
-        <input type="hidden" name="aksi" id="aksi" value="<?php echo"$aksi";?>" />
-          <table>	
-			<div class="form-group">
-                <div class="col-md-12">
-					<label style="font-size:24px;">Edit Barang Keluar</label> 
-				</div>
-			</div>	
-			<br><br><br>
-			<div class="form-group">
-				<div class="col-md-1">
-					<label>Tanggal</label> 
-				</div>
-				<div class="col-md-4">		
-					<div class='input-group date' id='tgl' name='tgl' >
-                        <input type='text' class="form-control" id="tgl" name="tgl" value="<?php echo"$d[tgl_keluar]"?>"/>
+
+<form method="post" action="javascript:void(0);">
+	<div class="col-md-11">
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Transaksi Barang Keluar</legend>
+		<div class="col-md-6">
+			<label>Nomor Transaksi</label>
+			<input class="form-control" placeholder="Nomor Transaksi" name="nomor_transaksi" id="kd_tr_masuk" type="text" value="<?php echo $no_tr;?>" readonly="">
+		</div>
+		<div class="col-md-6">
+			<label>Tanggal</label>
+			<div class='input-group date' id='tgl' name='tgl' >
+                        <input type='text' class="form-control" id="tgl" value="<?=date('Y-m-d')?>" name="tgl" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-				</div>
-				<div class="col-md-2"></div>
-				<div class="col-md-2">
-					<label>No Transaksi</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_keluar" id="kd_tr_keluar" type="text" value="<?php echo"$d[no_tr]"?>" readonly="">
-				</div>	
-			</div>
-			<br><br>
-			<div class="form-group">
-				<div class="col-md-1">
-					<label>Barang</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Nama Barang" name="nm_barang[]" id="nm_barang" type="text" readonly="">
-					<input class="form-control" name="kd_barang[]" id="kd_barang" type="hidden" >
-				</div>
-				<div class="col-md-1">
-					<input class="btn btn-info" type="button" value="cari" id="cari" onclick="tombol2()"> 
-				</div>
-			</div>
-			<br><p></br>
-			<div class="form-group">
-				
-				<div class="col-md-1">
-					<label>Satuan</label> 
-				</div> 
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Satuan Barang" name="kd_satuan[]" id="kd_satuan" type="text" readonly="">
-				   <input class="form-control" name="satuan[]" id="satuan" type="hidden" >
-				   <!--	<select class="form-control2" placeholder="Satuan Barang" name="kd_satuan[]" id="kd_satuan" type="text" value=""></select> -->
-				</div>
-				<div class="col-md-1">
-					<input class="btn btn-info" type="button" value="cari" id="cari" onclick="tombol3()"> 
-				</div>
-			</div>
-			<br><p></br>
-			<div class="form-group">
-				<div class="col-md-1">
-					<label>Jumlah</label> 
-				</div>
-				<div class="col-md-3">
-					<input class="form-control" placeholder="Jumlah Barang" name="jumlah[]" id="jumlah" type="text" >
-				</div>
-			</div>
-			<br></br>
-		   </table>	
-            <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="simpan">
-			   <input type="button" class="btn btn-info" value="tambah" onclick="addbarang1()">
-               <input type="button" class="btn btn-danger" onClick='self.history.back()'  value="Keluar">
-			</div>  
-		   	<table class="table table-bordered">
-				<thead>
-				  <tr id="dt_barang">
-					<th width="75%">Nama Barang</th>
-					<th width="10%">Jumlah</th>
-					<th width="10%">Satuan</th>
-					<th width="5%">Hapus</th>
-				  </tr>
-				</thead>
-				<tbody>
-					<?php  
-						$no=1;
-						while($row = mysql_fetch_array($edit))
-						{
+		</div>
+		<div class="col-md-11"><br/></div>
+		<div class="col-md-4">
+			<label>Pelanggan</label>
+			<select name="master_pelanggan_id" class="form-control">
+				<option value="">-Pilih Pelanggan-</option>
+				<?php
+				$pelanggan = mysql_query("SELECT * FROM master_pelanggan");
+				while ($pelanggans = mysql_fetch_assoc($pelanggan)) {
 					?>
-					<tr id="dat">
+					<option value="<?=$pelanggans['id']?>"><?=$pelanggans['nama']?></option>
+					<?php
+				}
+				?>
+			</select>
+		</div>
+		<div class="col-md-4">
+			<label>Purchase Order</label>
+			<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_masuk" id="kd_tr_masuk" type="text">
+		</div>
+		<div class="col-md-4">
+			<label>Delivery Order</label>
+			<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_masuk" id="kd_tr_masuk" type="text">
+		</div>
+		<div class="col-md-12"><hr/></div>
+		<div class="table-resposive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th width="5%">No</th>
+						<th>Nama Barang</th>
+						<th>Satuan</th>
+						<th>Jumlah</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td>#</td>
 						<td>
-							<input class="form-control" type="text" name="updatenm_barang[]" readonly="readonly" id="nm_barang<?php echo"$no"; ?>" value="<?php echo"$row[nm_barang]"; ?>">
+							<select name="produk" class="form-control">
+								<option>-Pilih Nama Barang-</option>
+							</select>
 						</td>
 						<td>
-							<input class="form-control" type="text" name="updatejumlah[]"  id="jumlah<?php echo"$no"; ?>" value="<?php echo"$row[jumlah]"; ?>">
+							<select name="produk" class="form-control">
+								<option>-Pilih Nama Satuan-</option>
+								<?=conv(0);?>
+							</select>
 						</td>
-						<td>
-							<input class="form-control" type="text" name="updatekd_satuan[]" readonly="readonly" id="kd_satuan<?php echo"$no"; ?>" value="<?php echo"$row[kd_satuan]"; ?>">
-						</td>
-						
-						<td>
-							<input type="button" class="btn btn-info" value="hapus"  onClick="hapus2('<?php echo"$no"; ?>')">
+						<td width="10%"><input type="text" name="qty" class="form-control" placeholder="Jumlah"></td>
+						<td width="10%">
+							<button id="BTN-TAMBAH" type="button" class="btn btn-md btn-success">Tambah</button>
 						</td>
 					</tr>
-					<?php 
-					$no++;
-						}?>
+				</thead>
+				<tbody id="Details">
+					
 				</tbody>
-			  </table>	
-		</form>
+			</table>
+		</div>
+		</fieldset>
+		<div class="col-md-12"><br/></div>
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<input type="submit" name="submit" value="Simpan" class="btn btn-md btn-success" >
+		</fieldset>
 	</div>
-</div>
+</form>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#BTN-TAMBAH').click(function(){
+			var details = "";
+			var long = parseInt($('#Details').find('tr').length);
+			var index = long+1;
+			var int = 0;
+			var indexTR = '';
+			$('#Details').find('tr').each(function(){
+				int++;
+				if(long==int) {
+					var IDtr = $(this).attr('class').split('_');
+					indexTR = parseInt(IDtr[1])+1;
+				}
+			})
+
+			if(indexTR==''){
+				indexTR = 1;
+			}
+
+			details = "<tr class='list_"+indexTR+"' >";
+				// details += "<td>"+indexTR+"</td>";
+				// details += "<td>"+$('select[name=barang] :selected').text()+"</td>";
+				// details += "<input type='hidden' name='data["+indexTR+"][master_produk_id]' value='"+$('select[name=barang] :selected').val()+"' >";
+				// details += "<td>"+$('input[name=jumlah]').val()+"</td>";
+				// details += "<input type='hidden' name='data["+indexTR+"][jumlah]' value='"+$('input[name=jumlah]').val()+"' >";
+				details += "<td></td>";
+			details += "</tr>";
+
+			$('#Details').append(details);
+		}); // end dom add append tr
+
+		$('#form-transaksi').submit(function(){
+			$.post('controllers/trans_produk_masuk.php?act=add',$('#form-transaksi').serialize(),function(data){
+			alert(data);
+			window.location.href = "media.php?mod=brg_masuk";
+		});
+
+			return false;
+		}); // end
+	}); // end
+
+
+</script>
+
 <?php
+
+} // end function do add
+
+function conv($parent){
+	$query =mysql_query("select id,getSatuan(satuan_terbesar) as satuan_terbesar, getSatuan(satuan_terkecil) as satuan_terkecil, jumlah from konversi_satuan where parent = ".$parent." ");
+	// $result = mysql_fetch_assoc($query);
+	$results = array();
+	$dash = "";
+	while($result = mysql_fetch_assoc($query)){
+		if($result['satuan_terbesar'] != "0"){
+			$dash = $result['satuan_terbesar']." - ";
+		}
+		$results = "<option>".$dash."".$result['satuan_terkecil']."</option>";
+		echo $results;
+		conv($result['id']);
+		
+		// conv($result['id']);
+	}
+
 }
-/////// akhir function tambah ////////
+
+// conv(0);
 ?>
-<!--
 
-						<td>
-							<input class="form-control" type="text" name="updatekd_satuan[]" id="kd_satuan<?php echo"$x"; ?>" value="<?php echo"$dt[kd_satuan]"; ?>">
-						</td>
-						<td>
-							<input class="form-control" type="text" name="updatejumlah[]" readonly="readonly" id="jumlah<?php echo"$x"; ?>" value="<?php echo"$dt[jumlah]"; ?>">
-						</td>
-						<td>
-							<input type="button" class="btn btn-info" value="hapus"  onClick="hapus('<?php echo"$x"; ?>')">
-						</td>
--->
-
+		</td>
 <?php
 /////// akhir function edit //////// 
 switch($_GET['act']){
