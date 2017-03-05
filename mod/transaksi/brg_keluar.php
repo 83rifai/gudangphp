@@ -365,7 +365,7 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 
 ?>
 
-<form method="post" action="javascript:void(0);">
+<form method="post" id="form-transaksi" action="javascript:void(0);">
 	<div class="col-md-11">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Transaksi Barang Keluar</legend>
@@ -399,11 +399,11 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 		</div>
 		<div class="col-md-4">
 			<label>Purchase Order</label>
-			<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_masuk" id="kd_tr_masuk" type="text">
+			<input class="form-control" placeholder="Purchase Order" name="purchase_order"  type="text">
 		</div>
 		<div class="col-md-4">
 			<label>Delivery Order</label>
-			<input class="form-control" placeholder="Nomor Transaksi" name="kd_tr_masuk" id="kd_tr_masuk" type="text">
+			<input class="form-control" placeholder="Delivery Order" name="delivery_order"  type="text">
 		</div>
 		<div class="col-md-12"><hr/></div>
 		<div class="table-resposive">
@@ -419,17 +419,25 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 					<tr>
 						<td>#</td>
 						<td>
-							<select name="produk" class="form-control">
-								<option>-Pilih Nama Barang-</option>
+							<select name="barang" class="form-control">
+								<option value="">-Pilih Nama Barang-</option>
+								<?php
+								$barang = mysql_query("SELECT * FROM master_produk");
+								while ($barangs = mysql_fetch_assoc($barang)) {
+									?>
+									<option value="<?=$barangs['id']?>"><?=$barangs['nama']?></option>
+									<?php
+								}
+								?>
 							</select>
 						</td>
 						<td>
-							<select name="produk" class="form-control">
+							<select name="satuan" class="form-control">
 								<option>-Pilih Nama Satuan-</option>
 								<?=conv(0);?>
 							</select>
 						</td>
-						<td width="10%"><input type="text" name="qty" class="form-control" placeholder="Jumlah"></td>
+						<td width="10%"><input type="text" name="jumlah" class="form-control" placeholder="Jumlah"></td>
 						<td width="10%">
 							<button id="BTN-TAMBAH" type="button" class="btn btn-md btn-success">Tambah</button>
 						</td>
@@ -470,11 +478,13 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 			}
 
 			details = "<tr class='list_"+indexTR+"' >";
-				// details += "<td>"+indexTR+"</td>";
-				// details += "<td>"+$('select[name=barang] :selected').text()+"</td>";
-				// details += "<input type='hidden' name='data["+indexTR+"][master_produk_id]' value='"+$('select[name=barang] :selected').val()+"' >";
-				// details += "<td>"+$('input[name=jumlah]').val()+"</td>";
-				// details += "<input type='hidden' name='data["+indexTR+"][jumlah]' value='"+$('input[name=jumlah]').val()+"' >";
+				details += "<td>"+indexTR+"</td>";
+				details += "<td>"+$('select[name=barang] :selected').text()+"</td>";
+				details += "<input type='hidden' name='data["+indexTR+"][master_produk_id]' value='"+$('select[name=barang] :selected').val()+"' >";
+				details += "<td>"+$('select[name=satuan] :selected').text()+"</td>";
+				details += "<input type='hidden' name='data["+indexTR+"][konversi_satuan_id]' value='"+$('select[name=barang] :selected').val()+"' >";
+				details += "<td>"+$('input[name=jumlah]').val()+"</td>";
+				details += "<input type='hidden' name='data["+indexTR+"][jumlah]' value='"+$('input[name=jumlah]').val()+"' >";
 				details += "<td></td>";
 			details += "</tr>";
 
@@ -482,9 +492,9 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 		}); // end dom add append tr
 
 		$('#form-transaksi').submit(function(){
-			$.post('controllers/trans_produk_masuk.php?act=add',$('#form-transaksi').serialize(),function(data){
+			$.post('controllers/trans_produk_keluar.php?act=add',$('#form-transaksi').serialize(),function(data){
 			alert(data);
-			window.location.href = "media.php?mod=brg_masuk";
+			// window.location.href = "media.php?mod=brg_masuk";
 		});
 
 			return false;
