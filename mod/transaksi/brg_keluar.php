@@ -482,7 +482,7 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 				details += "<td>"+$('select[name=barang] :selected').text()+"</td>";
 				details += "<input type='hidden' name='data["+indexTR+"][master_produk_id]' value='"+$('select[name=barang] :selected').val()+"' >";
 				details += "<td>"+$('select[name=satuan] :selected').text()+"</td>";
-				details += "<input type='hidden' name='data["+indexTR+"][konversi_satuan_id]' value='"+$('select[name=barang] :selected').val()+"' >";
+				details += "<input type='hidden' name='data["+indexTR+"][konversi_satuan_id]' value='"+$('select[name=satuan] :selected').val()+"' >";
 				details += "<td>"+$('input[name=jumlah]').val()+"</td>";
 				details += "<input type='hidden' name='data["+indexTR+"][jumlah]' value='"+$('input[name=jumlah]').val()+"' >";
 				details += "<td></td>";
@@ -517,7 +517,7 @@ function conv($parent){
 		if($result['satuan_terbesar'] != "0"){
 			$dash = $result['satuan_terbesar']." - ";
 		}
-		$results = "<option>".$dash."".$result['satuan_terkecil']."</option>";
+		$results = "<option value='".$result['id']."'>".$dash."".$result['satuan_terkecil']."</option>";
 		echo $results;
 		conv($result['id']);
 		

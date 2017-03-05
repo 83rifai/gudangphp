@@ -89,35 +89,35 @@ include"mpdf/mpdf.php";
 $mpdf=new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
 $aksi = $_GET[act];  
 
+$html = "data";
 
-
-$html = "<table width=\"100%\">
-				<tr>
-					<td align=\"right\" width=\"100%\"><b>R.IN.7</b></td>
-				</tr>
-				<tr>
-					<td align=\"center\" width=\"100%\"><h3><b>RAHASIA</b></h3></td>
-				</tr>
-				<tr>
-					<td align=\"center\" width=\"100%\"></td>
-				</tr>  
-				<tr>
-					<td align=\"right\" width=\"100%\"><br></td>
-				</tr>
-				<tr>
-					<td align=\"center\" width=\"100%\"><b>SURAT PERINTAH TUGAS <br> ---------------------------------------</b> <br>
-					NOMOR  PRINTUG - </td>
-				</tr>
-				<tr>
-					<td align=\"right\" width=\"100%\"><br></td>
-				</tr>
-				<tr>
-					<td align=\"center\" width=\"100%\"><b></b></td>
-				</tr>
-				<tr>
-					<td align=\"right\" width=\"100%\"><p><br></td>
-				</tr>
-		</table>";
+// $html = "<table width=\"100%\">
+// 				<tr>
+// 					<td align=\"right\" width=\"100%\"><b>R.IN.7</b></td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"center\" width=\"100%\"><h3><b>RAHASIA</b></h3></td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"center\" width=\"100%\"></td>
+// 				</tr>  
+// 				<tr>
+// 					<td align=\"right\" width=\"100%\"><br></td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"center\" width=\"100%\"><b>SURAT PERINTAH TUGAS <br> ---------------------------------------</b> <br>
+// 					NOMOR  PRINTUG - </td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"right\" width=\"100%\"><br></td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"center\" width=\"100%\"><b></b></td>
+// 				</tr>
+// 				<tr>
+// 					<td align=\"right\" width=\"100%\"><p><br></td>
+// 				</tr>
+// 		</table>";
 
 
 
