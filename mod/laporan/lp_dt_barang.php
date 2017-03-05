@@ -57,7 +57,7 @@ function doBrowse(){
 		<div class="table-responsive">
 			<table class="table table-bordered">
 				<thead>
-					<tr style="background-color: #c0c0c0;
+					<tr style="background-color: #c0c0c0;"">
 						<th width="5%">No</th>
 						<th>Nama</th>
 						<th>Jenis</th>
