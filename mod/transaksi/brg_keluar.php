@@ -244,20 +244,20 @@ $lvl = $_SESSION['level'];
                
                <?php
 			  
-			  while($r=mysql_fetch_array($query)){
+			  while($results = mysql_fetch_assoc($query)){
 			   $no++;
 			   ?>
                     <tr>
-                       <td width="5%"><?php echo"$no";?></td>
-					   <td width="40%"><?php echo"$r[id]";?></td>
-					   <td width="30%"><?php echo"$r[tgl_keluar]";?></td>
+                       <td width="5%"><?php echo $no;?></td>
+					   <td width="40%"><?php echo $results['nomor_transaksi'];?></td>
+					   <td width="30%"><?php echo $results['tanggal'];?></td>
                        <td width="25%">
-						   <a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-eye"></i></a> |
-						   <!--<a href="?mod=brg_keluar&act=editbrg_keluar&id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | -->
+						   <a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a> |
+						   <!--<a href="?mod=brg_keluar&act=editbrg_keluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | -->
 						   <?php if($lvl == "admin") {?> 
-						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo"$r[id]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>|
+						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>|
 						   <?php } ?>
-						   <a href="mod\transaksi\aksi\lp_srt_keluar.php?id=<?php echo"$r[id]";?>" class="btn btn-info"><i class="fa fa-print"></i></a> 
+						   <a href="mod\transaksi\aksi\lp_srt_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-print"></i></a> 
 						   </td>
                     </tr>
                     </tr>
