@@ -54,7 +54,7 @@ function doBrowse(){
 								<td><?=$result['satuan_terkecil'];?></td>
 								<td><?=$result['jumlah'];?></td>
 								<td width="15%" align="center">
-							   <a href="?mod=barang&act=editsatuan&id=<?php echo $result['id'];?>" class="btn btn-info btn-md"><i class="fa fa-edit"></i></a>&nbsp;
+							   <a href="?mod=konversi_satuan&act=editsatuan&id=<?php echo $result['id'];?>" class="btn btn-info btn-md"><i class="fa fa-edit"></i></a>&nbsp;
 		                       <a href="javascript:void(0)" class="btn btn-danger btn-md" onclick="DelData('controllers/konversi_satuan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
 							</tr>
 							<?php
