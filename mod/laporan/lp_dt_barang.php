@@ -20,36 +20,7 @@ function doBrowse(){
 
 	$query = mysql_query("SELECT * FROM data_produk");
 ?>
-    <!-- <div class="tabelku">
    
-		<form action="mod\laporan\aksi\lp_dt_barang.php" method="post" id="siswa1" enctype="multipart/form-data">
-			<div class="form-group">
-				<div class="col-md-3"></div>
-                <div class="col-md-9">
-					<label style="font-size:24px;"><h3><label> Cetak Laporan Data Barang </label></h3></label> 
-				</div>
-			</div>	
-			<br><br><br>
-			<div class="form-group">
-				<div class="col-md-2">
-					<label>Tanggal Cetak</label> 
-				</div>
-				<div class="col-md-3">		
-					<div class='input-group date' id='tgl1' name='tgl1' >
-                        <input type='text' class="form-control" id="tgl1" name="tgl1" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-				</div>
-			</div>
-			
-            <br><br>
-			 <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="Cetak">
-			</div>
-		 </form>	
-		</div>	 -->
 
 <div class="col-md-11">
 	<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
