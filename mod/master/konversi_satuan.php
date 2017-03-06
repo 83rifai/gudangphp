@@ -1,44 +1,7 @@
 <link href="./css/media.css" rel="stylesheet" type="text/css">
 <link href="./css/bootstrap.css" rel="stylesheet" type="text/css">
 
-<!--
-<script type="text/javascript">	
-$(document).ready(function(){
- $("#satuan1").submit(function(){
-		
-		var aa		    = document.getElementById("nisn").value;
-		var nm_kelas	= document.getElementById("nm_kelas").value;
-		var nama		= document.getElementById("nama").value;
-		var tgl_lahir	= document.getElementById("tgl_lahir").value;
-		
-		
-		if(aa == ''){
-			alert("NIP Tidak Boleh Kosong");
-			return false;
-		}else if(nm_kelas == ''){
-            alert("Kelas Tidak Boleh Kosong");
-			return false; 
-		}else if(nama == ''){
-            alert("Nama Tidak Boleh Kosong");
-			return false; 
-		}else if(tgl_lahir == ''){
-			alert("Tanggal lahir Tidak Boleh Kosong");
-			return false; 
-		}
-        
-    });
 
-});
-
-$(function () {
-    $('#tgl_lahir1').datetimepicker({
-        format: 'YYYY-MM-DD',
-    });
-
-});
-
-</script>
-    -->
 <?php
 
 function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke format indonesia
@@ -63,7 +26,7 @@ function doBrowse(){
 	?>
 	<div class="col-md-11">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
-			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Data Konveris Satuan Barang</legend>
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Data Konversi Satuan Barang</legend>
 			
 
 			<div class="table-responsive">
@@ -92,7 +55,7 @@ function doBrowse(){
 								<td><?=$result['jumlah'];?></td>
 								<td width="15%" align="center">
 							   <a href="?mod=barang&act=editsatuan&id=<?php echo $result['id'];?>" class="btn btn-info btn-md"><i class="fa fa-edit"></i></a>&nbsp;
-		                       <a href="javascript:void(0)" class="btn btn-danger btn-md" onclick="DelData('controllers/master_satuan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
+		                       <a href="javascript:void(0)" class="btn btn-danger btn-md" onclick="DelData('controllers/konversi_satuan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
 							</tr>
 							<?php
 						}
@@ -102,6 +65,17 @@ function doBrowse(){
 			</div>
 		</fieldset>
 	</div>
+
+	<script type="text/javascript">
+	function DelData(Url){
+		$.post(Url,function(data){
+			alert(data);
+			window.location.reload();
+		});
+		return false;
+		
+	}
+	</script>
 <?php
     } // end
 
@@ -116,27 +90,7 @@ function doBrowse(){
 
 	$query = mysql_query("SELECT * FROM master_satuan");
 ?>
-<script type="text/javascript">	
-$(function(){	
-		
-  $('#id_jenis').on('change', function() {
-    if(this.value!=null){
-      $("#nm_jenis").val($("#id_jenis option:selected").text());
-    }
-  })
-  // $('#id_warna').on('change', function() {
-    // if(this.value!=null){
-      // $("#nm_warna").val($("#id_warna option:selected").text());
-    // }
-  // })
-  $('#id_merk').on('change', function() {
-    if(this.value!=null){
-      $("#nm_merk").val($("#id_warna option:selected").text());
-    }
-  })
 
-})
-</script>
 
 <form id="form-input" method="post" action="<?=$_GET['id']?>">
 	<div class="col-md-10">
