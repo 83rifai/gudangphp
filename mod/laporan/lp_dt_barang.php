@@ -34,6 +34,7 @@ function doBrowse(){
 						<th>Jenis</th>
 						<th>Warna</th>
 						<th width="7%">Stock</th>
+						<th>Satuan</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,6 +48,7 @@ function doBrowse(){
 							<td><?=$result['jenis']?></td>
 							<td><?=$result['warna']?></td>
 							<td><?=$result['stock']?></td>
+							<td><?=$result['satuan']?></td>
 						</tr>
 						<?php
 					}
