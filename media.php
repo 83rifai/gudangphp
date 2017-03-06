@@ -86,6 +86,9 @@ else{
 	                    <a title="satuan" href="?mod=satuan"><i class="fa fa-user-md"></i>
                             <span>Data Satuan Barang</span>
                         </a>
+                        <a title="satuan" href="?mod=konversi_satuan"><i class="fa fa-user-md"></i>
+                            <span>Data Konversi Satuan</span>
+                        </a>
 						<!--a title="besar" href="?mod=besar"><i class="fa fa-user-md"></i>
                             <span>Data Satuan Besar</span>
                         </a>
@@ -239,7 +242,7 @@ else{
 		elseif($_GET['mod']=='data_barang'){
 			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/transaksi/data_barang.php');
 		}elseif($_GET['mod']=='konversi_satuan'){
-			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/konversi_satuan.php');
+			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/master/konversi_satuan.php');
 		}
 		?>
 			
