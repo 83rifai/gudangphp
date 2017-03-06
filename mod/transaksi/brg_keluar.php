@@ -252,12 +252,12 @@ $lvl = $_SESSION['level'];
 					   <td width="40%"><?php echo $results['nomor_transaksi'];?></td>
 					   <td width="30%"><?php echo $results['tanggal'];?></td>
                        <td width="25%">
-						   <a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+						   <a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo $results['id'];?>" class="btn btn-sm btn-info"><i class="fa fa-search"></i></a>
 						   <!--<a href="?mod=brg_keluar&act=editbrg_keluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | -->
-						   <?php if($lvl == "admin") {?> 
-						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>
-						   <?php } ?>
-						   <a href="mod\transaksi\aksi\lp_srt_keluar.php" class="btn btn-info"><i class="fa fa-print"></i></a> 
+						  <!--  <?php if($lvl == "admin") {?> 
+						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>|
+						   <?php } ?> -->
+						   <a href="mod/laporan/cetak/lp_srt_keluar.php?id=<?=$results['id']?>" class="btn btn-primary btn-sm"><b class="fa fa-print"></b></a>
 						   </td>
                     </tr>
                     </tr>
