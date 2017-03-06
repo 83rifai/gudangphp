@@ -46,7 +46,7 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 		$result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
 		return($result);
 	}
-	$query=mysql_query("SELECT * FROM pelanggan order by id")or die("gagal".mysql_error());
+	// $query=mysql_query("SELECT * FROM pelanggan order by id")or die("gagal".mysql_error());
 	
 
 function doBrowse(){

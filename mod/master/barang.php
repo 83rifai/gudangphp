@@ -33,7 +33,6 @@ function doBrowse(){
 		$query=mysql_query("SELECT
 			master_produk.id,
 			master_produk.nama as nama,
-			master_produk.merk_id,
 			master_produk.satuan_id,
 			master_produk.warna as warna,
 			master_produk.stock as stock,
@@ -42,13 +41,11 @@ function doBrowse(){
 			konversi_satuan.parent,
 			getSatuan(konversi_satuan.satuan_terbesar) satuan_terbesar,
 			getSatuan(konversi_satuan.satuan_terkecil) as satuan_terkecil,
-			master_jenis.nama as jenis,
-			master_merk.nama as merk
+			master_jenis.nama as jenis
 			FROM
 				master_produk
 			LEFT JOIN konversi_satuan ON konversi_satuan.id = master_produk.konversi_satuan_id
-			LEFT JOIN master_jenis ON master_jenis.id = master_produk.jenis_id
-			LEFT JOIN master_merk ON master_merk.id = master_produk.merk_id")or die("gagal".mysql_error());
+			LEFT JOIN master_jenis ON master_jenis.id = master_produk.jenis_id")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
