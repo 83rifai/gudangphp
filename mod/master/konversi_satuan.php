@@ -68,7 +68,7 @@ function doBrowse(){
 
 			<div class="table-responsive">
 			<div class="col-md-12" style="margin-bottom: 15px;">
-				 <a href="?mod=satuan&act=addsatuan" class="btn btn-md btn-primary">Tambah Konversi Satuan</a></div>
+				 <a href="?mod=konversi_satuan&act=addsatuan" class="btn btn-md btn-primary">Tambah Konversi Satuan</a></div>
 			</div>
 				<table class="table table-bordered" id="example1">
 					<thead>
@@ -113,6 +113,8 @@ function doBrowse(){
 		$queries = mysql_query("select * from master_satuan where id = ".$_GET['id']." ");
 		$results = mysql_fetch_assoc($queries);
 	}
+
+	$query = mysql_query("SELECT * FROM master_satuan");
 ?>
 <script type="text/javascript">	
 $(function(){	
@@ -140,11 +142,38 @@ $(function(){
 	<div class="col-md-10">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Tambah Satuan</legend>
-			<div class="col-md-6">
-			<input type="hidden"  value=<?=$_GET[id]?$_GET[id]:""?>" name="id" >
+			<div class="col-md-4">
+				<input type="hidden"  value=<?=$_GET[id]?$_GET[id]:""?>" name="id" >
 				<div class="form-group">
 					<label>Nama Satuan</label>
-					<input type="text" class="form-control" value="<?=$results['nama']?$results['nama']:""?>" name="nama" placeholder="nama">
+					<select name="satuan_terbesar" class="form-control">
+						<option value="0">-Satuan Terbesar-</option>
+						<?php
+						while ($result = mysql_fetch_assoc($query)) {
+							?>
+							<option value="<?=$result['id']?>"><?=$result['nama']?></option>
+							<?php
+						}
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Nama Satuan</label>
+					<select name="satuan_terkecil" class="form-control">
+						<option value="0">-Satuan Terkecil-</option>
+						<?php
+						$quer = mysql_query("SELECT * FROM master_satuan");
+						while ($results = mysql_fetch_assoc($quer)) {
+							?>
+							<option value="<?=$results['id']?>"><?=$results['nama']?></option>
+							<?php
+						}
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Value</label>
+					<input type="text" class="form-control" value="<?=$results['jumlah']?$results['jumlah']:""?>" name="jumlah" placeholder="Jumlah">
 				</div>
 				
 			</div>
@@ -162,9 +191,9 @@ $(document).ready(function(){
 	$('#form-input').submit(function(){
 		var act = "add";
 		if($('input[name=id]').val()){act = "edit";}
-		$.post('controllers/master_satuan.php?act='+act,$('#form-input').serialize(),function(data){
+		$.post('controllers/konversi_satuan.php?act='+act,$('#form-input').serialize(),function(data){
 			alert(data);
-			window.location.href = "media.php?mod=satuan";
+			window.location.href = "media.php?mod=konversi_satuan";
 		});
 		return false;
 	}); // end function submit
