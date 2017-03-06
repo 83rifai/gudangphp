@@ -53,6 +53,8 @@ function doBrowse(){
 					<tr style="background-color: #c0c0c0;"">
 						<th width="5%">No</th>
 						<th>Tanggal</th>
+						<th>No. Transaksi</th>
+						<th>Suplier</th>
 						<th>Kode Nama Produk</th>
 						<th  width="7%">Jumlah</th>
 						<th>Satuan</th>
@@ -67,6 +69,8 @@ function doBrowse(){
 						<tr>
 							<td width="5%"><?=$no++?></td>
 							<td><?=$result['tanggal']?></td>
+							<td><?=$result['nomor_transaksi']?></td>
+							<td><?=$result['suplier']?></td>
 							<td><?=$result['kode']?> - <?=$result['nama']?></td>
 							<td><?=$result['jumlah']?></td>
 							<td><?=$result['satuan']?></td>
