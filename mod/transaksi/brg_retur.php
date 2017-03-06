@@ -221,7 +221,7 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 function doBrowse(){
 $lvl = $_SESSION['level'];
 		$no=0;
-		$query=mysql_query("select * from trans_produk_keluar_header")or die("gagal".mysql_error());
+		$query=mysql_query("select * from trans_produk_retur_header")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -252,12 +252,12 @@ $lvl = $_SESSION['level'];
 					   <td width="40%"><?php echo $results['nomor_transaksi'];?></td>
 					   <td width="30%"><?php echo $results['tanggal'];?></td>
                        <td width="25%">
-						   <a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a> |
+						   <a href="?mod=brg_retur&act=view_brgretur&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a>&nbsp;
 						   <!--<a href="?mod=brg_keluar&act=editbrg_keluar&id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | -->
-						   <?php if($lvl == "admin") {?> 
+						   <!-- <?php if($lvl == "admin") {?> 
 						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>|
-						   <?php } ?>
-						   <a href="mod\transaksi\aksi\lp_srt_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-print"></i></a> 
+						   <?php } ?> -->
+						   <!-- <a href="mod\transaksi\aksi\lp_srt_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-print"></i></a>  -->
 						   </td>
                     </tr>
                     </tr>
@@ -273,79 +273,55 @@ $lvl = $_SESSION['level'];
     } 
 	
 function doView(){
-$id	 = $_GET[id];
-
+$id	 = $_GET['id'];
+$queries = mysql_query("SELECT
+	trans_produk_retur_detail.id,
+	trans_produk_retur_detail.master_produk_id,
+	trans_produk_retur_detail.jumlah as jumlah,
+	trans_produk_retur_detail.konversi_satuan_id,
+	trans_produk_retur_detail.trans_produk_retur_header_id,
+	master_produk.warna,
+	master_produk.nama as nama,
+	master_produk.kode as kode,
+	master_satuan.nama as satuan
+FROM
+trans_produk_retur_detail
+LEFT JOIN master_produk ON master_produk.id = trans_produk_retur_detail.master_produk_id
+LEFT JOIN master_satuan ON master_satuan.id = master_produk.satuan_id
+ where trans_produk_retur_header_id = ".$_GET['id']." ");
 ?>
-<div class="col-md-11" style="background:#fff;padding:15px;border:1px solid #ddd;">
-	<?php
-		$id=mysql_query("SELECT a.*,b.*,c.*
-						FROM tr_brg_keluar a INNER JOIN td_brg_keluar b
-						ON a.id = b.id LEFT JOIN barang c
-						ON b.kd_barang = c.id
-						where a.id='$id'")or die("gagal".mysql_error());
-			$d=mysql_fetch_array($id);
-	?>
-	<table class="table table-bordered">
-		<tr>
-			<td colspan="6" style="text-align:center"><label><h3>Data Barang keluar</h3></label></td>
-		</tr>
-		<tr>
-			<td width="14%">
-			   <label>Tanggal </label>
-			 </td>
-			 <td width="2%"><label>:</label></td>
-			 <td width="33%">
-				<?php echo(DateToIndo("$d[tgl_keluar]")); ?>
-			 </td>
-			 <td width="14%">
-			   <label>No Transaksi </label>
-			 </td>
-			 <td width="2%"><label>:</label></td>
-			 <td width="33%">		
-				<?php echo "$d[id]"; ?>
-			 </td>
-		</tr>
-	</table>	
-	<table id="example1" class="table table-bordered table-striped">
-               <thead>
-                    <tr>
-                       <th>No</th>
-					   <th>Nama Barang</th>
-					   <th>Warna Barang</th>
-					   <th>Merk Barang</th>
-                       <th>Satuan Barang</th>
-					   <th>Jumlah Barang</th>
-                    </tr>
-               </thead>
-               <tbody>
-               
-               <?php
-			  $id2=mysql_query("SELECT a.*,b.*,c.*
-						FROM tr_brg_keluar a INNER JOIN td_brg_keluar b
-						ON a.id = b.id LEFT JOIN barang c
-						ON b.kd_barang = c.id
-						where a.id='$_GET[id]'")or die("gagal".mysql_error());
-						
-			  while($r=mysql_fetch_array($id2)){
-			   $no++;
-			   ?>
-                    <tr>
-                       <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_jenis]";?></td>
-					   <td width="15%"><?php echo"$r[nm_warna]";?></td>
-					   <td width="15%"><?php echo"$r[nm_merk]";?></td>
-					   <td width="15%"><?php echo"$r[satuan]";?></td>
-                       <td width="15%"><?php echo"$r[jumlah]";?></td>
-                    </tr>
-               <?php
-			   }
-	?>	
-	</table>
-	<div class="form-group" >
-	   <input type="button" class="btn btn-danger" onclick='window.location ="media.php?mod=brg_keluar"' value="Keluar">
-	</div>
-</div>
- 
+ <div class="col-md-11">
+ 	<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+		<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">View Retur Detail</legend>
+		<div class="table-resposive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Kode Nama Barang</th>
+						<th>Jumlah</th>
+						<th>Satuan</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$no = 1;
+					while ($results = mysql_fetch_assoc($queries)) {
+						?>
+						<tr>
+							<td><?=$no++;?></td>
+							<td><?=$results['kode'];?> <?=$results['nama'];?></td>
+							<td><?=$results['jumlah'];?></td>
+							<td><?=$results['satuan'];?></td>
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>
+		</div>
+		</fieldset>
+ </div>
 <?php
 }
 

@@ -35,54 +35,56 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 	
 
 function doBrowse(){
+
+	$query = mysql_query("SELECT * FROM data_produk_masuk");
 ?>
-    <div class="tabelku">
-   
-		<form action="mod\laporan\aksi\lp_masuk.php" method="post" id="siswa1" enctype="multipart/form-data">
-			<div class="form-group">
-				<div class="col-md-3"></div>
-                <div class="col-md-9">
-					<label style="font-size:24px;"><h3><label> Cetak Laporan Barang Masuk </label></h3></label> 
-				</div>
-			</div>	
-			<br><br><br>
-			<div class="form-group">
-				<div class="col-md-2">
-					<label>Tanggal Awal</label> 
-				</div>
-				<div class="col-md-3">		
-					<div class='input-group date' id='tgl1' name='tgl1' >
-                        <input type='text' class="form-control" id="tgl1" name="tgl1" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-				</div>
-				<div class="col-md-1"><label>S/d</label></div>
-				<div class="col-md-2">
-					<label>Tanggal Akhir</label> 
-				</div>
-				<div class="col-md-3">		
-					<div class='input-group date' id='tgl2' name='tgl2' >
-                        <input type='text' class="form-control" id="tgl2" name="tgl2" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-				</div>
-				<div class="col-md-1"></div>
-			</div>
-			
-            <br><br>
-			 <div class="form-group" >
-               <input type="submit" class="btn btn-info" value="Cetak">
-			</div>
-		 </form>	
-		</div>	
+
+
+<div class="col-md-11">
+	<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+		<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Laporan Barang Masuk</legend>
+		<div style="margin-bottom: 10px;">
+		<a href="mod/laporan/cetak/lp_dt_barang.php" class="btn btn-primary btn-sm"><b class="fa fa-file"></b>&nbsp;Cetak PDF</a>
+		</div>  
+
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="background-color: #c0c0c0;"">
+						<th width="5%">No</th>
+						<th>Tanggal</th>
+						<th>Kode Nama Produk</th>
+						<th  width="7%">Jumlah</th>
+						<th>Satuan</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$no = 1;
+					while ($result = mysql_fetch_assoc($query)) {
+						?>
+						<tr>
+							<td width="5%"><?=$no++?></td>
+							<td><?=$result['tanggal']?></td>
+							<td><?=$result['kode']?> - <?=$result['nama']?></td>
+							<td><?=$result['jumlah']?></td>
+							<td><?=$result['satuan']?></td>
+							
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>	
+		</div>
+		
+	</fieldset>
+</div>
     
 <?php
-    }
-    /////// function tambah ////////
+}
+// end do browse
     function doCtk(){
 		
 include"mpdf/mpdf.php";
