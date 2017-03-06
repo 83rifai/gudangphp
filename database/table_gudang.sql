@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1
+Source Server         : LOCALHOST
 Source Server Version : 50516
-Source Host           : 127.0.0.1:3306
+Source Host           : localhost:3306
 Source Database       : gudang
 
 Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2017-03-06 09:11:06
+Date: 2017-03-07 05:28:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=4
+AUTO_INCREMENT=6
 
 ;
 
@@ -37,7 +37,7 @@ AUTO_INCREMENT=4
 -- Records of konversi_satuan
 -- ----------------------------
 BEGIN;
-INSERT INTO `konversi_satuan` VALUES ('1', '0', '0', '1', '1'), ('2', '1', '1', '2', '4'), ('3', '2', '2', '3', '500');
+INSERT INTO `konversi_satuan` VALUES ('2', '1', '1', '2', '4'), ('4', null, '1', '2', '4'), ('5', null, '3', '4', '500');
 COMMIT;
 
 -- ----------------------------
@@ -102,7 +102,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=2
+AUTO_INCREMENT=3
 
 ;
 
@@ -110,7 +110,7 @@ AUTO_INCREMENT=2
 -- Records of master_produk
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_produk` VALUES ('1', 'SIDU HVS 110gram', null, 'Putih', '4', '1', '1', 'S0001');
+INSERT INTO `master_produk` VALUES ('1', 'SIDU HVS 110gram', '1', 'Putih', '16', '1', '1', 'S0001'), ('2', 'HVS 120gr', '2', 'putih', '0', '0', '1', 'H0001');
 COMMIT;
 
 -- ----------------------------
@@ -124,7 +124,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=6
+AUTO_INCREMENT=7
 
 ;
 
@@ -132,7 +132,7 @@ AUTO_INCREMENT=6
 -- Records of master_satuan
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_satuan` VALUES ('1', 'DUS'), ('2', 'BOX'), ('3', 'RIM'), ('4', 'LEMBAR'), ('5', 'PIECES');
+INSERT INTO `master_satuan` VALUES ('1', 'DUS'), ('2', 'BOX'), ('3', 'RIM'), ('4', 'LEMBAR'), ('5', 'PIECES'), ('6', 'Kilogram');
 COMMIT;
 
 -- ----------------------------
@@ -158,29 +158,6 @@ AUTO_INCREMENT=2
 -- ----------------------------
 BEGIN;
 INSERT INTO `master_suplier` VALUES ('1', 'Supplier', null, null, null);
-COMMIT;
-
--- ----------------------------
--- Table structure for satuan
--- ----------------------------
-DROP TABLE IF EXISTS `satuan`;
-CREATE TABLE `satuan` (
-`id_satuan`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`st_besar`  varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`st_sedang`  varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`st_kecil`  varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-PRIMARY KEY (`id_satuan`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of satuan
--- ----------------------------
-BEGIN;
-INSERT INTO `satuan` VALUES ('S1.S1.K1', 'S1', 'S1', 'K1'), ('S3.S2.K2', 'S3', 'S2', 'K2'), ('S3.S2.K3', 'S3', 'S2', 'K3');
 COMMIT;
 
 -- ----------------------------
@@ -249,7 +226,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=1
+AUTO_INCREMENT=2
 
 ;
 
@@ -257,6 +234,7 @@ AUTO_INCREMENT=1
 -- Records of trans_produk_masuk_detail
 -- ----------------------------
 BEGIN;
+INSERT INTO `trans_produk_masuk_detail` VALUES ('1', '1', '12', null, '10');
 COMMIT;
 
 -- ----------------------------
@@ -272,7 +250,7 @@ PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
 DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=10
+AUTO_INCREMENT=11
 
 ;
 
@@ -280,7 +258,7 @@ AUTO_INCREMENT=10
 -- Records of trans_produk_masuk_header
 -- ----------------------------
 BEGIN;
-INSERT INTO `trans_produk_masuk_header` VALUES ('3', '2017-02-28', 'BM-280217001', '1'), ('4', '2017-02-28', 'BM-280217001', '1'), ('5', '2017-02-28', 'BM-280217001', '1'), ('6', '2017-02-28', 'BM-280217001', '1'), ('7', '2017-02-28', 'BM-280217001', '1'), ('8', '2017-03-05', '', '0'), ('9', '2017-03-05', '', '0');
+INSERT INTO `trans_produk_masuk_header` VALUES ('10', '2017-03-06', 'BM-060317001', '1');
 COMMIT;
 
 -- ----------------------------
@@ -329,7 +307,7 @@ AUTO_INCREMENT=17
 -- Records of trans_produk_retur_header
 -- ----------------------------
 BEGIN;
-INSERT INTO `trans_produk_retur_header` VALUES ('10', '2017-03-05', 'BR-05031700', '0'), ('11', '2017-03-05', 'BR-05031700', '0'), ('12', '2017-03-05', 'BR-05031700', '0'), ('13', '2017-03-05', 'BR-05031700', '0'), ('14', '2017-03-05', 'BR-05031700', '0'), ('15', '2017-03-05', 'BR-05031700', '0'), ('16', '2017-03-05', 'BR-05031700', '0');
+INSERT INTO `trans_produk_retur_header` VALUES ('16', '2017-03-05', 'BR-05031700', '0');
 COMMIT;
 
 -- ----------------------------
@@ -358,7 +336,7 @@ COMMIT;
 -- ----------------------------
 -- Auto increment value for konversi_satuan
 -- ----------------------------
-ALTER TABLE `konversi_satuan` AUTO_INCREMENT=4;
+ALTER TABLE `konversi_satuan` AUTO_INCREMENT=6;
 
 -- ----------------------------
 -- Auto increment value for master_jenis
@@ -384,12 +362,12 @@ DELIMITER ;
 -- ----------------------------
 -- Auto increment value for master_produk
 -- ----------------------------
-ALTER TABLE `master_produk` AUTO_INCREMENT=2;
+ALTER TABLE `master_produk` AUTO_INCREMENT=3;
 
 -- ----------------------------
 -- Auto increment value for master_satuan
 -- ----------------------------
-ALTER TABLE `master_satuan` AUTO_INCREMENT=6;
+ALTER TABLE `master_satuan` AUTO_INCREMENT=7;
 
 -- ----------------------------
 -- Auto increment value for master_suplier
@@ -441,12 +419,12 @@ DELIMITER ;
 -- ----------------------------
 -- Auto increment value for trans_produk_masuk_detail
 -- ----------------------------
-ALTER TABLE `trans_produk_masuk_detail` AUTO_INCREMENT=1;
+ALTER TABLE `trans_produk_masuk_detail` AUTO_INCREMENT=2;
 
 -- ----------------------------
 -- Auto increment value for trans_produk_masuk_header
 -- ----------------------------
-ALTER TABLE `trans_produk_masuk_header` AUTO_INCREMENT=10;
+ALTER TABLE `trans_produk_masuk_header` AUTO_INCREMENT=11;
 DROP TRIGGER IF EXISTS `auto_update_stock_masuk_copy`;
 DELIMITER ;;
 CREATE TRIGGER `auto_update_stock_masuk_copy` AFTER INSERT ON `trans_produk_retur_detail` FOR EACH ROW BEGIN
