@@ -19,7 +19,9 @@ include"../../../config/koneksi.php";
 include"../../../mpdf/mpdf.php";
 $mpdf	= new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
 
-$html = "";
+$html = "<table class='table table-bordered'>";
+	$html .= "<tr><td>DATA</td></tr>";
+$html .= "</table>";
 
 $mpdf->WriteHTML($html);
 $mpdf->SetHTMLFooter("<hr/>");
