@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2017-03-06 09:11:50
+Date: 2017-03-06 09:51:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,6 @@ DROP VIEW IF EXISTS `data_produk`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`127.0.0.1` SQL SECURITY DEFINER  VIEW `data_produk` AS SELECT
 	master_produk.id,
 	master_produk.nama,
-	master_produk.merk_id,
 	master_produk.satuan_id,
 	master_produk.warna,
 	master_produk.stock,
