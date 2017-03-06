@@ -37,9 +37,11 @@ $query = mysql_query("SELECT * FROM data_produk_masuk");
 					<tr style="background-color: #c0c0c0;"">
 						<th width="5%">No</th>
 						<th>Tanggal</th>
+						<th>Nomor Transaksi</th>
 						<th>Kode Nama Produk</th>
 						<th  width="7%">Jumlah</th>
 						<th>Satuan</th>
+						<th>Pelanggan</th>
 						
 					</tr>
 				</thead>
@@ -51,9 +53,11 @@ $query = mysql_query("SELECT * FROM data_produk_masuk");
 						<tr>
 							<td width="5%"><?=$no++?></td>
 							<td><?=$result['tanggal']?></td>
+							<td><?=$result['nomor_transaksi']?></td>
 							<td><?=$result['kode']?> - <?=$result['nama']?></td>
 							<td><?=$result['jumlah']?></td>
 							<td><?=$result['satuan']?></td>
+							<td><?=$result['pelanggan']?></td>
 							
 						</tr>
 						<?php
