@@ -57,56 +57,54 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 	
 
 function doBrowse(){
-		$no=0;
-		$query=mysql_query("SELECT b.*,
-							CONCAT('Besar : ' , d.nama , CONCAT(' ( ' , d.jumlah , ' ) ')) AS besar,
-							CONCAT('Sedang : ' , e.nama , CONCAT(' ( ' , e.jumlah , ' ) ')) AS sedang,
-							CONCAT('Kecil : ' , f.nama , CONCAT(' ( ' , f.jumlah , ' ) ')) AS kecil
-							FROM satuan b 
-							INNER JOIN besar d ON b.st_besar=d.id 
-							INNER JOIN sedang e ON b.st_sedang=e.id 
-							INNER JOIN kecil f ON b.st_kecil=f.id")or die("gagal".mysql_error());
-		
-?>
-    <div class="tabelku">
-    <div class="content-header">
-    <a href="?mod=satuan&act=addsatuan" class="blue_solid">Tambah Satuan</a></div>
-    <br>
-        <table id="example1" class="table table-bordered table-striped">
-               <thead>
-                    <tr>
-                       <th>No</th>
-                       <th>Satuan Besar</th>
-					   <th>Satuan Sedang</th>
-					   <th>Satuan Kecil</th>
-                       <th>Aksi</th>
-                    </tr>
-               </thead>
-               <tbody>
-               
-               <?php
-			   while($r=mysql_fetch_array($query)){
-			   $no++;
-			   ?>
-                    <tr>
-                       <td width="5%"><?php echo"$no";?></td>
-					   <td width="25%"><?php echo"$r[besar]";?></td>
-                       <td width="25%"><?php echo"$r[sedang]";?></td>
-					   <td width="25%"><?php echo"$r[kecil]";?></td>
-                       <td width="35%"><a href="?mod=satuan&act=editsatuan&id=<?php echo"$r[id_satuan]";?>" class="btn btn-info"><i class="fa fa-edit"></i></a> | 
-                       <a href="aksi.php?mod=satuan&act=hapus_satuan&id=<?php echo"$r[id_satuan]";?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
-                    </tr>
-                    </tr>
-               <?php
-			   }
-			   ?>
-             </tbody>
-        </table>
-    </div>
+	$query = mysql_query("SELECT * FROM data_satuan_konversi");	
+
     
+	?>
+	<div class="col-md-11">
+		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Data Satuan Barang</legend>
+			
+
+			<div class="table-responsive">
+			<div class="col-md-12" style="margin-bottom: 15px;">
+				 <a href="?mod=satuan&act=addsatuan" class="btn btn-md btn-primary">Tambah Satuan</a></div>
+			</div>
+				<table class="table table-bordered" id="example1">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Satuan Terbesar</th>
+							<th>Satuan Terkecil</th>
+							<th>Aksi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$no = 1;
+						while ($result = mysql_fetch_assoc($query)) {
+							?>
+							<tr>
+								<td><?=$no++;?></td>
+								<td><?=$result['satuan_terbesar'];?></td>
+								<td><?=$result['satuan_terkecil'];?></td>
+								<td width="15%"><center>
+									<a href="?mod=brg_keluar&act=view_brgkeluar&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+									<a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>
+								</center>
+								</td>
+							</tr>
+							<?php
+						}
+						?>
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
+	</div>
 <?php
-    }
-    /////// function tambah ////////
+    } // end
+
     function doAdd(){
     $aksi = $_GET[act];  
 ?>
