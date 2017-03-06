@@ -20,11 +20,15 @@ function doBrowse(){
 
 	$query = mysql_query("SELECT * FROM data_produk");
 ?>
-   
+
 
 <div class="col-md-11">
 	<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
 		<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Laporan Barang</legend>
+		<div style="margin-bottom: 10px;">
+		<a href="#" class="btn btn-primary btn-sm"><b class="fa fa-file"></b>&nbsp;Cetak PDF</a>
+		</div>  
+
 		<div class="table-responsive">
 			<table class="table table-bordered">
 				<thead>
