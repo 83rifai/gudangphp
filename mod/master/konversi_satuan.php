@@ -57,24 +57,26 @@ function DateToIndo($date) { // fungsi atau method untuk mengubah tanggal ke for
 	
 
 function doBrowse(){
-	$query = mysql_query("SELECT * FROM master_satuan");	
+	$query = mysql_query("SELECT * FROM data_satuan_konversi");	
 
     
 	?>
 	<div class="col-md-11">
 		<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
-			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Data Satuan Barang</legend>
+			<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Data Konveris Satuan Barang</legend>
 			
 
 			<div class="table-responsive">
 			<div class="col-md-12" style="margin-bottom: 15px;">
-				 <a href="?mod=satuan&act=addsatuan" class="btn btn-md btn-primary">Tambah Satuan</a></div>
+				 <a href="?mod=satuan&act=addsatuan" class="btn btn-md btn-primary">Tambah Konversi Satuan</a></div>
 			</div>
 				<table class="table table-bordered" id="example1">
 					<thead>
 						<tr>
 							<th width="5%">No</th>
-							<th>Nama</th>
+							<th>Satuan Terbesar</th>
+							<th>Satuan Terkecil</th>
+							<th>Jumlah</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -85,10 +87,12 @@ function doBrowse(){
 							?>
 							<tr>
 								<td><?=$no++;?></td>
-								<td><?=$result['nama'];?></td>
+								<td><?=$result['satuan_terbesar'];?></td>
+								<td><?=$result['satuan_terkecil'];?></td>
+								<td><?=$result['jumlah'];?></td>
 								<td width="15%" align="center">
-							   <a href="?mod=barang&act=editsatuan&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a>&nbsp;
-		                       <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_satuan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
+							   <a href="?mod=barang&act=editsatuan&id=<?php echo $result['id'];?>" class="btn btn-info btn-md"><i class="fa fa-edit"></i></a>&nbsp;
+		                       <a href="javascript:void(0)" class="btn btn-danger btn-md" onclick="DelData('controllers/master_satuan.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
 							</tr>
 							<?php
 						}
