@@ -173,7 +173,7 @@ $lvl = $_SESSION['level'];
 					   <td width="35%"><?php echo $result['tanggal'];?></td>
                        <td width="20%">
                        <center>
-						   <a href="?mod=brg_masuk&act=view_brgmasuk&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+						   <!-- <a href="?mod=brg_masuk&act=view_brgmasuk&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a>  -->
 						  
 						  <?php if($lvl == "admin") {?> 
 						  <a href="mod\transaksi\aksi\hp_masuk.php?id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
