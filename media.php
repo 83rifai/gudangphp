@@ -80,9 +80,9 @@ else{
 						<!--a title="warna" href="?mod=warna"><i class="fa fa-user-md"></i>
                             <span>Data warna</span>
                         </a-->
-						<a title="merk" href="?mod=merk"><i class="fa fa-user-md"></i>
+						<!-- <a title="merk" href="?mod=merk"><i class="fa fa-user-md"></i>
                             <span>Data Merk</span>
-                        </a>
+                        </a> -->
 	                    <a title="satuan" href="?mod=satuan"><i class="fa fa-user-md"></i>
                             <span>Data Satuan Barang</span>
                         </a>

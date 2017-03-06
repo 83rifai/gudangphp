@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2017-03-06 04:20:14
+Date: 2017-03-06 08:58:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,28 +63,6 @@ INSERT INTO `master_jenis` VALUES ('1', 'HVS_A4');
 COMMIT;
 
 -- ----------------------------
--- Table structure for master_merk
--- ----------------------------
-DROP TABLE IF EXISTS `master_merk`;
-CREATE TABLE `master_merk` (
-`id`  int(11) NOT NULL AUTO_INCREMENT ,
-`nama`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-AUTO_INCREMENT=5
-
-;
-
--- ----------------------------
--- Records of master_merk
--- ----------------------------
-BEGIN;
-INSERT INTO `master_merk` VALUES ('1', 'Sinar Dunia'), ('2', 'Kiky'), ('3', 'Pilot'), ('4', 'Standart');
-COMMIT;
-
--- ----------------------------
 -- Table structure for master_pelanggan
 -- ----------------------------
 DROP TABLE IF EXISTS `master_pelanggan`;
@@ -114,7 +92,6 @@ DROP TABLE IF EXISTS `master_produk`;
 CREATE TABLE `master_produk` (
 `id`  int(11) NOT NULL AUTO_INCREMENT ,
 `nama`  varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-`merk_id`  int(11) NULL DEFAULT NULL ,
 `satuan_id`  int(11) NULL DEFAULT NULL ,
 `warna`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
 `stock`  int(11) NULL DEFAULT 0 ,
@@ -133,7 +110,7 @@ AUTO_INCREMENT=2
 -- Records of master_produk
 -- ----------------------------
 BEGIN;
-INSERT INTO `master_produk` VALUES ('1', 'SIDU HVS 110gram', null, null, 'Putih', '4', '1', '1', 'S0001');
+INSERT INTO `master_produk` VALUES ('1', 'SIDU HVS 110gram', null, 'Putih', '4', '1', '1', 'S0001');
 COMMIT;
 
 -- ----------------------------
@@ -181,27 +158,6 @@ AUTO_INCREMENT=2
 -- ----------------------------
 BEGIN;
 INSERT INTO `master_suplier` VALUES ('1', 'Supplier', null, null, null);
-COMMIT;
-
--- ----------------------------
--- Table structure for merk
--- ----------------------------
-DROP TABLE IF EXISTS `merk`;
-CREATE TABLE `merk` (
-`id`  varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-`nm_merk`  varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
-PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=latin1 COLLATE=latin1_swedish_ci
-
-;
-
--- ----------------------------
--- Records of merk
--- ----------------------------
-BEGIN;
-INSERT INTO `merk` VALUES ('M1', 'Merk 1'), ('N1', 'Natural'), ('P1', 'Pilot');
 COMMIT;
 
 -- ----------------------------
@@ -618,6 +574,18 @@ JOIN master_produk ON master_produk.id = trans_produk_retur_detail.master_produk
 LEFT JOIN konversi_satuan ON konversi_satuan.id = trans_produk_retur_detail.konversi_satuan_id ;
 
 -- ----------------------------
+-- View structure for data_satuan_konversi
+-- ----------------------------
+DROP VIEW IF EXISTS `data_satuan_konversi`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`127.0.0.1` SQL SECURITY DEFINER  VIEW `data_satuan_konversi` AS SELECT
+	konversi_satuan.id,
+	getSatuan(konversi_satuan.satuan_terbesar) as satuan_terbesar,
+	getSatuan(konversi_satuan.satuan_terkecil) as satuan_terkecil,
+	konversi_satuan.jumlah
+FROM
+	konversi_satuan ;
+
+-- ----------------------------
 -- Function structure for getSatuan
 -- ----------------------------
 DROP FUNCTION IF EXISTS `getSatuan`;
@@ -642,11 +610,6 @@ ALTER TABLE `konversi_satuan` AUTO_INCREMENT=4;
 -- Auto increment value for master_jenis
 -- ----------------------------
 ALTER TABLE `master_jenis` AUTO_INCREMENT=2;
-
--- ----------------------------
--- Auto increment value for master_merk
--- ----------------------------
-ALTER TABLE `master_merk` AUTO_INCREMENT=5;
 DROP TRIGGER IF EXISTS `auto_code`;
 DELIMITER ;;
 CREATE TRIGGER `auto_code` BEFORE INSERT ON `master_produk` FOR EACH ROW begin
