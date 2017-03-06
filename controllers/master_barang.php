@@ -6,8 +6,8 @@ $act = $_GET['act'];
 
 if($act == "add"){
 	if($_POST){
-		$query = mysql_query("INSERT INTO master_produk (nama,jenis_id,konversi_satuan_id,warna) 
-		VALUES ('".$_POST['nama']."','".$_POST['jenis_id']."','".$_POST['konversi_satuan_id']."','".$_POST['warna']."')
+		$query = mysql_query("INSERT INTO master_produk (nama,jenis_id,satuan_id,warna) 
+		VALUES ('".$_POST['nama']."','".$_POST['jenis_id']."','".$_POST['satuan_id']."','".$_POST['warna']."')
 		");
 
 		if($query){
@@ -30,7 +30,7 @@ if($act == "add"){
 }else if($act == "edit"){
 	if($_POST){
 		$query = mysql_query("UPDATE master_produk 
-			SET nama = ('".$_POST['nama']."', jenis_id = '".$_POST['jenis_id']."', konversi_satuan_id = '".$_POST['konversi_satuan_id']."',warna = '".$_POST['warna']."')
+			SET nama = ('".$_POST['nama']."', jenis_id = '".$_POST['jenis_id']."', satuan_id = '".$_POST['satuan_id']."',warna = '".$_POST['warna']."')
 			WHERE id = ".$_POST['id']."
 			");
 

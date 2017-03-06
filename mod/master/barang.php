@@ -41,11 +41,13 @@ function doBrowse(){
 			konversi_satuan.parent,
 			getSatuan(konversi_satuan.satuan_terbesar) satuan_terbesar,
 			getSatuan(konversi_satuan.satuan_terkecil) as satuan_terkecil,
-			master_jenis.nama as jenis
+			master_jenis.nama as jenis,
+			master_satuan.nama as satuan
 			FROM
 				master_produk
 			LEFT JOIN konversi_satuan ON konversi_satuan.id = master_produk.konversi_satuan_id
-			LEFT JOIN master_jenis ON master_jenis.id = master_produk.jenis_id")or die("gagal".mysql_error());
+			LEFT JOIN master_jenis ON master_jenis.id = master_produk.jenis_id
+			LEFT JOIN master_satuan on master_satuan.id = master_produk.satuan_id")or die("gagal".mysql_error());
 		
 ?>
     <div class="tabelku">
@@ -75,7 +77,7 @@ function doBrowse(){
 					   <td width="20%"><?php echo $result['nama'];?></td>
                        <td width="20%"><?php echo $result['warna'];?></td>
 					   <td width="20%"><?php echo $result['jenis'];?></td>
-					   <td width="20%"><?php echo $result['satuan_terkecil'];?></td>
+					   <td width="20%"><?php echo $result['satuan'];?></td>
                        <td width="15%" align="center">
 					   <a href="?mod=barang&act=editbarang&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-edit"></i></a>&nbsp;
                        <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/master_barang.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a></td>
@@ -165,14 +167,14 @@ $(function(){
 				</div>
 				<div class="form-group">
 					<label>Satuan Barang</label>
-					<select name="konversi_satuan_id" class="form-control">
+					<select name="satuan_id" class="form-control">
 						<option value="">-Pilih Satuan Barang-</option>
 						<?php
 						
 						$query = mysql_query("select * from master_satuan ");
 						while($result = mysql_fetch_assoc($query) ){
 							$s_selected = "";
-							if($results['satuan'] == $result['id'] ){$s_selected = "selected";}
+							if($results['satuan_id'] == $result['id'] ){$s_selected = "selected";}
 							echo "<option ".$s_selected." value='".$result['id']."'>".$result['nama']."</option>";
 						}
 						?>
