@@ -257,7 +257,7 @@ $lvl = $_SESSION['level'];
 						   <!-- <?php if($lvl == "admin") {?> 
 						   <a href="mod\transaksi\aksi\hp_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a>|
 						   <?php } ?> -->
-						   <!-- <a href="mod\transaksi\aksi\lp_srt_keluar.php?id=<?php echo $results['id'];?>" class="btn btn-info"><i class="fa fa-print"></i></a>  -->
+						   <a href="mod/laporan/cetak/lp_retur_keluar.php?id=<?=$results['id']?>" class="btn btn-primary btn-sm"><b class="fa fa-print"></b></a>
 						   </td>
                     </tr>
                     </tr>
