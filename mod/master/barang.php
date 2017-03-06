@@ -169,11 +169,11 @@ $(function(){
 						<option value="">-Pilih Satuan Barang-</option>
 						<?php
 						
-						$query = mysql_query("select id, getSatuan(satuan_terkecil) as satuan_terkecil from konversi_satuan where parent = 0");
+						$query = mysql_query("select * from master_satuan ");
 						while($result = mysql_fetch_assoc($query) ){
 							$s_selected = "";
-							if($results['konversi_satuan_id'] == $result['id'] ){$s_selected = "selected";}
-							echo "<option ".$s_selected." value='".$result['id']."'>".$result['satuan_terkecil']."</option>";
+							if($results['satuan'] == $result['id'] ){$s_selected = "selected";}
+							echo "<option ".$s_selected." value='".$result['id']."'>".$result['nama']."</option>";
 						}
 						?>
 					</select>
