@@ -509,7 +509,7 @@ $no_tr = "BL-"."$tgl$bln$th"."00".$n[reg];
 } // end function do add
 
 function conv($parent){
-	$query =mysql_query("select id,getSatuan(satuan_terbesar) as satuan_terbesar, getSatuan(satuan_terkecil) as satuan_terkecil, jumlah from konversi_satuan where parent = ".$parent." ");
+	$query =mysql_query("select id,getSatuan(satuan_terbesar) as satuan_terbesar, getSatuan(satuan_terkecil) as satuan_terkecil, jumlah from konversi_satuan  ");
 	// $result = mysql_fetch_assoc($query);
 	$results = array();
 	$dash = "";
@@ -519,7 +519,7 @@ function conv($parent){
 		}
 		$results = "<option value='".$result['id']."'>".$dash."".$result['satuan_terkecil']."</option>";
 		echo $results;
-		conv($result['id']);
+		// conv($result['id']);
 		
 		// conv($result['id']);
 	}
