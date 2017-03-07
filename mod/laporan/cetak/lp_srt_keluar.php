@@ -21,6 +21,8 @@ $(document).ready(function(){
 <?php
 include"../../../config/koneksi.php";
 include"../../../mpdf/mpdf.php";
+$header = mysql_query("SELECT * trans_produk_keluar_header where id = ".$_GET['id']." ");
+$headers = "";
 $query = mysql_query("SELECT * FROM data_produk_keluar where trans_produk_keluar_id = ".$_GET['id']."  ");
 $mpdf	= new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
 
@@ -63,6 +65,17 @@ $html .= "<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;
 	}
 
 $html .= "</table>";
+
+
+$html .= "<table width='100%'>";
+	$html .= "<tr>";
+	$html .= "<td width='50%'>Pengirim :</td>";
+	$html .= "<td width='50%'>Penerima</td>";
+	$html .= "<td width='50%'></td>";
+	$html .= "<td width='50%'></td>";
+	$html .= "</tr>";
+$html .= "</table>";
+$html .= "<br/>";
 
 $mpdf->WriteHTML($html);
 $mpdf->SetHTMLFooter("<hr/>");
