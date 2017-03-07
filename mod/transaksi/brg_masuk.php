@@ -173,12 +173,13 @@ $lvl = $_SESSION['level'];
 					   <td width="35%"><?php echo $result['tanggal'];?></td>
                        <td width="20%">
                        <center>
-						   <!-- <a href="?mod=brg_masuk&act=view_brgmasuk&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a>  -->
+						   <a href="?mod=brg_masuk&act=view_brgmasuk&id=<?php echo $result['id'];?>" class="btn btn-info"><i class="fa fa-eye"></i></a>  
 						  
 						  <?php if($lvl == "admin") {?> 
-						  <a href="mod\transaksi\aksi\hp_masuk.php?id=<?php echo $result['id'];?>" class="btn btn-danger"onclick="return confirm('Apakah Anda Yakin, ingin menghapus data ini?')" ><i class="fa fa-trash-o"></i></a></td>
+						   <a href="javascript:void(0)" class="btn btn-danger" onclick="DelData('controllers/trans_produk_masuk.php?act=del&id=<?php echo $result['id'];?>');" ><i class="fa fa-trash-o"></i></a>
 						  <?php } ?>
 						  </center>
+						</td>
 					</tr>
                     </tr>
                <?php
@@ -188,102 +189,76 @@ $lvl = $_SESSION['level'];
              </tbody>
         </table>
     </div>
+    	<script type="text/javascript">
+		function DelData(Url){
+			$.post(Url,function(data){
+				alert(data);
+				window.location.reload();
+			});
+			return false;
+			
+		}
+		</script>
     
 <?php
     } 
 	
 function doView(){
-$id	 = $_GET[id];
+$id	 = $_GET['id'];
 
+$query = mysql_query("SELECT * FROM data_produk_masuk where trans_produk_masuk_header_id = ".$_GET['id']." ");
 ?>
-<div class="col-md-11" style="background:#fff;padding:15px;border:1px solid #ddd;">
-	<?php
-		$id=mysql_query("SELECT a.*,b.*,c.*
-						FROM tr_brg_masuk a INNER JOIN td_brg_masuk b
-						ON a.id = b.id LEFT JOIN barang c
-						ON b.kd_barang = c.id
-						where a.id='$id'")or die("gagal".mysql_error());
-			$d=mysql_fetch_array($id);
-	?>
-	<table class="table table-bordered">
-		<tr>
-			<td colspan="6" style="text-align:center"><label><h3>Data Barang Masuk</h3></label></td>
-		</tr>
-		<tr>
-			<td width="14%">
-			   <label>Tanggal </label>
-			 </td>
-			 <td width="2%"><label>:</label></td>
-			 <td width="33%">
-				<?php echo(DateToIndo("$d[tgl_masuk]")); ?>
-			 </td>
-			 <td width="14%">
-			   <label>No Transaksi </label>
-			 </td>
-			 <td width="2%"><label>:</label></td>
-			 <td width="33%">		
-				<?php echo "$d[kd_tr]"; ?>
-			 </td>
-		</tr>
-	</table>	
-	<table id="example1" class="table table-bordered table-striped">
-               <thead>
-                    <tr>
-                       <th>No</th>
-					   <th>Nama Barang</th>
-					   <th>Warna Barang</th>
-					   <th>Merk Barang</th>
-                       <th>Satuan Barang</th>
-					   <th>Jumlah Barang</th>
-                    </tr>
-               </thead>
-               <tbody>
-               
-               <?php
-			  $id2=mysql_query("SELECT a.*,b.*,c.*
-						FROM tr_brg_masuk a INNER JOIN td_brg_masuk b
-						ON a.id = b.id LEFT JOIN barang c
-						ON b.kd_barang = c.id
-						where a.id='$_GET[id]'")or die("gagal".mysql_error());
+
+
+<div class="col-md-11">
+	<fieldset style="border: 1px solid #c0c0c0; padding: 15px;">
+		<legend style="background-color: #c0c0c0; font-size: 11pt; border: none; margin: 5px; padding: 5px; width: auto; ">Transaksi Barang Masuk</legend>
+		<div style="margin-bottom: 10px;">
+		<!-- <a href="mod/laporan/cetak/lp_dt_barang.php" class="btn btn-primary btn-sm"><b class="fa fa-file"></b>&nbsp;Cetak PDF</a> -->
+		</div>  
+
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="background-color: #c0c0c0;"">
+						<th width="5%">No</th>
+						<th>Tanggal</th>
+						<th>No. Transaksi</th>
+						<th>Suplier</th>
+						<th>Kode Nama Produk</th>
+						<th  width="7%">Jumlah</th>
+						<th>Satuan</th>
 						
-			  while($r=mysql_fetch_array($id2)){
-			   $no++;
-			   ?>
-                    <tr>
-                       <td width="5%"><?php echo"$no";?></td>
-					   <td width="35%"><?php echo"$r[nm_jenis]";?></td>
-					   <td width="15%"><?php echo"$r[nm_warna]";?></td>
-					   <td width="15%"><?php echo"$r[nm_merk]";?></td>
-					   <td width="15%"><?php echo"$r[satuan]";?></td>
-                       <td width="15%"><?php echo"$r[jumlah]";?></td>
-                    </tr>
-               <?php
-			   }
-	?>	
-	</table>
-	<div class="form-group" >
-	   <input type="button" class="btn btn-danger" onclick='window.location ="media.php?mod=brg_masuk"' value="Keluar">
-	</div>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$no = 1;
+					while ($result = mysql_fetch_assoc($query)) {
+						?>
+						<tr>
+							<td width="5%"><?=$no++?></td>
+							<td><?=$result['tanggal']?></td>
+							<td><?=$result['nomor_transaksi']?></td>
+							<td><?=$result['suplier']?></td>
+							<td><?=$result['kode']?> - <?=$result['nama']?></td>
+							<td><?=$result['jumlah']?></td>
+							<td><?=$result['satuan']?></td>
+							
+						</tr>
+						<?php
+					}
+					?>
+				</tbody>
+			</table>	
+		</div>
+		
+	</fieldset>
 </div>
-
-<script type="text/javascript">	
-$(document).ready(function(){
- $("#brg_masuk1").submit(function(){
-		
-		var tgl		    = document.getElementById("tgl").value;
-		
-		if(tgl == ''){
-			alert("Tanggal Tidak Boleh Kosong");
-			return false;
-		}
-        
-    });
-
-});
-</script>
-
- 
+    
 <?php
+
+
 }
     // this function for add new data trans
     function doAdd(){

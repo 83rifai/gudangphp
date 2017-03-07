@@ -23,7 +23,7 @@ if($act == "add"){
 	}
 }else if($act == "del"){
 	if($_GET['id']){
-		$query =  mysql_query("DELETE FROM master_suplier where id = ".$_GET['id']." ");
+		$query =  mysql_query("DELETE FROM trans_produk_masuk_header where id = ".$_GET['id']." ");
 		if($query){
 			echo "Berhasil Dihapus";
 		}else{
