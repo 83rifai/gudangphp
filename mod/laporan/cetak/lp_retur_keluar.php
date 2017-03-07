@@ -24,7 +24,31 @@ include"../../../mpdf/mpdf.php";
 $query = mysql_query("SELECT * FROM data_produk_retur where trans_produk_retur_header_id = ".$_GET['id']."  ");
 $mpdf	= new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
 
-$html = $_GET['id']."<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;' >";
+
+$html = "<center><h3>SURAT RETUR</h3></center>"; 
+
+$html .= "<table width='100%'>";
+	$html .= "<tr>";
+	$html .= "<td width='50%' style='font-size: 10pt;' >Purchase Order :</td>";
+	$html .= "<td width='50%' style='font-size: 10pt;' >Delivery Order :</td>";
+	$html .= "</tr><tr>";
+	$html .= "<td width='50%'></td>";
+	$html .= "<td width='50%'></td>";
+	$html .= "</tr><tr>";
+	$html .= "<td width='50%' style='font-size: 10pt;' >Dari :</td>";
+	$html .= "<td width='50%' style='font-size: 10pt;' >Tujuan :</td>";
+	$html .= "</tr><tr>";
+	$html .= "<td width='50%' style='font-size: 10pt;' >PT. RAMA BERKAH ABADI<br/>Griya Taman Sari T5</td>";
+	$html .= "<td width='50%'></td>";
+	$html .= "</tr>";
+$html .= "</table>";
+$html .= "<br/>";
+
+// $mpdf->SetHTMLHeader($header);
+
+$html .= "<hr/>";
+
+$html .= "<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;' >";
 	$no = 1;
 	$html .="<tr style='background: #f0f0f0;'>";
 	$html .="<th width='5%' aling='center'>No</th>";
