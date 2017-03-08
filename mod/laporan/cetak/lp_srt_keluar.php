@@ -53,7 +53,7 @@ $html .= "<table width='100%'>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >Tujuan :</td>";
 	$html .= "</tr><tr>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >PT. RAMA BERKAH ABADI<br/>Griya Taman Sari T5</td>";
-	$html .= "<td width='50%'></td>";
+	$html .= "<td width='50%'>".$headers['nama_pelanggan']."<br/>".$headers['alamat']."</td>";
 	$html .= "</tr>";
 $html .= "</table>";
 $html .= "<br/>";
