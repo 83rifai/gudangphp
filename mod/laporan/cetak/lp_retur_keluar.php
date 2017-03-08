@@ -56,7 +56,7 @@ $html .= "<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;
 	$html .="<th aling='center'>Nama Produk</th>";
 	$html .="<th aling='center'>Jumlah</th>";
 	$html .="<th aling='center'>Satuan Produk</th>";
-	$html .="<th aling='center'>Suplier</th>";
+	// $html .="<th aling='center'>Suplier</th>";
 	$html .="</tr>";
 	while ($result = mysql_fetch_assoc($query)) {
 		$html .="<tr>";
@@ -65,7 +65,7 @@ $html .= "<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;
 		$html .="<td>".$result['nama']."</td>";
 		$html .="<td>".$result['jumlah']."</td>";
 		$html .="<td>".$result['satuan_terkecil']."</td>";
-		$html .="<td></td>";
+		// $html .="<td></td>";
 		$html .="</tr>";
 	}
 $html .= "</table>";
