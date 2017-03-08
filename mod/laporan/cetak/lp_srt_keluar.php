@@ -21,7 +21,19 @@ $(document).ready(function(){
 <?php
 include"../../../config/koneksi.php";
 include"../../../mpdf/mpdf.php";
-$header = mysql_query("SELECT * trans_produk_keluar_header where id = ".$_GET['id']." ");
+$header = mysql_query("SELECT
+	trans_produk_keluar_header.id AS id,
+	trans_produk_keluar_header.nomor_transaksi AS nomor_transaksi,
+	trans_produk_keluar_header.tanggal AS tanggal,
+	trans_produk_keluar_header.master_pelanggan_id AS master_pelanggan_id,
+	trans_produk_keluar_header.purchase_order AS purchase_order,
+	trans_produk_keluar_header.delivery_order AS delivery_order,
+	master_pelanggan.nama AS nama_pelanggan,
+	master_pelanggan.alamat,
+	master_pelanggan.no_telp
+FROM
+	trans_produk_keluar_header
+JOIN master_pelanggan ON master_pelanggan.id = trans_produk_keluar_header.master_pelanggan_id where id = ".$_GET['id']." ");
 $headers = mysql_fetch_assoc($headers);
 
 $query = mysql_query("SELECT * FROM data_produk_keluar where trans_produk_keluar_id = ".$_GET['id']."  ");
