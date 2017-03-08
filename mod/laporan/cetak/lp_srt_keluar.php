@@ -22,7 +22,8 @@ $(document).ready(function(){
 include"../../../config/koneksi.php";
 include"../../../mpdf/mpdf.php";
 $header = mysql_query("SELECT * trans_produk_keluar_header where id = ".$_GET['id']." ");
-$headers = "";
+$headers = mysql_fetch_assoc($headers);
+
 $query = mysql_query("SELECT * FROM data_produk_keluar where trans_produk_keluar_id = ".$_GET['id']."  ");
 $mpdf	= new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
 
@@ -33,8 +34,8 @@ $html .= "<table width='100%'>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >Purchase Order :</td>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >Delivery Order :</td>";
 	$html .= "</tr><tr>";
-	$html .= "<td width='50%'></td>";
-	$html .= "<td width='50%'></td>";
+	$html .= "<td width='50%'>".$headers['purchase_order']."</td>";
+	$html .= "<td width='50%'>".$headers['delivery_order']."</td>";
 	$html .= "</tr><tr>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >Dari :</td>";
 	$html .= "<td width='50%' style='font-size: 10pt;' >Tujuan :</td>";
