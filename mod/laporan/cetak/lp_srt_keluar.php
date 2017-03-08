@@ -34,7 +34,7 @@ $header = mysql_query("SELECT
 FROM
 	trans_produk_keluar_header
 JOIN master_pelanggan ON master_pelanggan.id = trans_produk_keluar_header.master_pelanggan_id where id = ".$_GET['id']." ");
-$headers = mysql_fetch_assoc($headers);
+$headers = mysql_fetch_assoc($header);
 
 $query = mysql_query("SELECT * FROM data_produk_keluar where trans_produk_keluar_id = ".$_GET['id']."  ");
 $mpdf	= new mPDF('utf-8', 'A4-P'); // Membuat file mpdf baru			
