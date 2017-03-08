@@ -79,19 +79,19 @@ $html .= "<table cellspacing = '0' style='border: 1px solid #c0c0c0; width:100%;
 		$html .="<td>".$result['kode']."</td>";
 		$html .="<td>".$result['nama']."</td>";
 		$html .="<td>".$result['jumlah']."</td>";
-		$html .="<td>".$result['satuan_terkecil']."</td>";
+		$html .="<td>".$result['satuan']."</td>";
 		// $html .="<td>".$result['pelanggan']."</td>";
 		$html .="</tr>";
 	}
 
-$html .= "</table>";
+$html .= "</table><br/>";
 
 
 $html .= "<table width='100%'>";
 	$html .= "<tr>";
 	$html .= "<td width='50%'>Pengirim :</td>";
 	$html .= "<td width='50%'>Penerima</td>";
-	$html .= "</tr><td>";
+	$html .= "</tr><tr>";
 	$html .= "<td width='50%'></td>";
 	$html .= "<td width='50%'></td>";
 	$html .= "</tr>";
