@@ -126,7 +126,10 @@ else{
                             <span>Barang Keluar</span>
                         </a>
                         <a title="barang_retur" href="?mod=brg_retur"><i class="glyphicon glyphicon-log-out"></i>
-                            <span>Barang Retur</span>
+                            <span>Barang Pelanggan Retur</span>
+                        </a>
+                        <a title="barang_retur" href="?mod=suplier_retur"><i class="glyphicon glyphicon-log-out"></i>
+                            <span>Barang Suplier Retur</span>
                         </a>
 					 
                     </div>		
@@ -229,6 +232,8 @@ else{
 			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/transaksi/brg_keluar.php');
 		}elseif($_GET['mod']=='brg_retur'){
 			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/transaksi/brg_retur.php');
+		}elseif($_GET['mod']=='suplier_retur'){
+			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/transaksi/suplier_retur.php');
 		}
 		elseif($_GET['mod']=='lp_dtbarang'){
 			include( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mod/laporan/lp_dt_barang.php');
